@@ -11,6 +11,8 @@ import com.neocop.roleplayplugin.roleplayCore.roles.villager;
 import com.neocop.roleplayplugin.utils.Preferences;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.ThreadLocalRandom;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -60,21 +62,24 @@ public class RpgEngine {
                 rpgRolePlayer.put(player.getDisplayName(), new RPGPlayer(player, new villager()));
             }
         }
-        startRpg();
+        //start roleplay
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                Player p = null;
+                Object[] playerz = RpgEngine.rpgRolePlayer.values().toArray();
+                RPGPlayer rpP = null;
+                for (int i = 0; playerz.length > i; i++) {
+                    rpP = (RPGPlayer) playerz[i];
+                    p = rpP.player;
+                    p.setGameMode(GameMode.SURVIVAL);
+                    rpgRolePlayer.get(p.getDisplayName()).role.start(p);
+                }
+            }
+        }, 10600);
         //} else {
         //   player.sendMessage(Preferences.notEnoughPlayerForRpg);
         // }
-    }
-
-    public static void startRpg() {
-        Object[] players = RpgEngine.rpgRolePlayer.values().toArray();
-        Player p = null;
-        RPGPlayer rpP = null;
-        for (int i = 0; players.length > i; i++) {
-            rpP = (RPGPlayer) players[i];
-            p = rpP.player;
-            rpgRolePlayer.get(p.getDisplayName()).role.start(p);
-        }
     }
 
     public static void nightRpg() {
@@ -100,13 +105,20 @@ public class RpgEngine {
     }
 
     public static void stopRpg(Player player, boolean abort) {
+        if(rpgRunning){
         if (abort) {
             Bukkit.broadcast(Preferences.globalRpgGetCanceled, null);
         }
         rpgRunning = false;
+        //clear Maps an Arrays
         rpgPlayer.clear();
         rpgRolePlayer.clear();
-        killer = null;
+        killer.clear();
+        villagerTeam.clear();
+        detective.clear();
+        } else {
+            player.sendMessage(Preferences.noRunningRpg);
+        }
     }
 
     public static boolean analyzePlayer(Player act, Player analye) {

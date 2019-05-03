@@ -14,7 +14,7 @@ import org.bukkit.entity.Player;
  *
  * @author Noah
  */
-public class villager implements rpgRole{
+public class villager implements RPGRole{
 
     @Override
     public void start(Player player) {

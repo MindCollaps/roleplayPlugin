@@ -11,7 +11,7 @@ import org.bukkit.entity.Player;
  *
  * @author Noah
  */
-public interface rpgRole {
+public interface RPGRole {
     public void start(Player player);
     public void actionNight(Player player);
     public void actionDay(Player player);

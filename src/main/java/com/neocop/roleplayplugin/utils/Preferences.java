@@ -13,6 +13,7 @@ public class Preferences {
     public static final String noPermissionOpNeeded = "§cDu hast keine berechtigung für diesen Command! Nur Op´s haben berechtigung!";
     public static final String noPermissionCommandOnlyForUser = "Dieser Command ist nur für den User anwendbar!";
     public static final String notEnoughPlayerForRpg = "§eEs sind nicht genug Spieler in der mitchmach Liste. Füge sie mit dem add command hinzu!";
+    public static final String noRunningRpg = "§cEs ist kein Roleplay im gange!";
     
     public static final String playerAddToRpg = "§aDu wurdest zum Roleplay hinzugefügt!";
     public static final String playerNotFound = "§cSpieler konnte nicht gefunden werden oder ist nicht Online!";

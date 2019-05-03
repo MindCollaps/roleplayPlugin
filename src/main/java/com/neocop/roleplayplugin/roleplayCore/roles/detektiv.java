@@ -14,7 +14,7 @@ import org.bukkit.entity.Player;
  *
  * @author Noah
  */
-public class detektiv implements rpgRole{
+public class detektiv implements RPGRole{
 
     @Override
     public void start(Player player) {

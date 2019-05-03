@@ -5,8 +5,8 @@
  */
 package com.neocop.roleplayplugin.roleplayCore;
 
-import com.neocop.roleplayplugin.roleplayCore.roles.rpgRole;
 import org.bukkit.entity.Player;
+import com.neocop.roleplayplugin.roleplayCore.roles.RPGRole;
 
 /**
  *
@@ -15,9 +15,9 @@ import org.bukkit.entity.Player;
 public class RPGPlayer {
     
     Player player;
-    rpgRole role;
+    RPGRole role;
     
-    public RPGPlayer(Player player, rpgRole role){
+    public RPGPlayer(Player player, RPGRole role){
         this.player = player;
         this.role = role;
     }

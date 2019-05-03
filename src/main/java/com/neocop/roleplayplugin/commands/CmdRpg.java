@@ -27,6 +27,7 @@ public class CmdRpg implements IntCommand {
 
     @Override
     public void actionUser(String[] args, CommandSender sender, Command command) {
+        Player cPlayer = (Player) sender;
         switch (args[0]) {
             case "start":
                 RpgEngine.startRpg((Player) sender);
@@ -87,7 +88,7 @@ public class CmdRpg implements IntCommand {
                 break;
 
             case "stop":
-                RpgEngine.stopRpg((Player) sender, true);
+                RpgEngine.stopRpg(cPlayer, true);
                 break;
 
             case "list":
@@ -110,18 +111,24 @@ public class CmdRpg implements IntCommand {
                 break;
 
             case "join":
-                Player joinPlayer = (Player) sender;
-                if (RpgEngine.rpgPlayer.containsKey(joinPlayer.getDisplayName())) {
-                    joinPlayer.sendMessage(Preferences.playerAlreadyInRpg);
+                if (RpgEngine.rpgPlayer.containsKey(cPlayer.getDisplayName())) {
+                    cPlayer.sendMessage(Preferences.playerAlreadyInRpg);
                     return;
                 }
-                joinPlayer.sendMessage(Preferences.playerAddToRpg);
-                RpgEngine.addRpgPlayer(joinPlayer);
+                cPlayer.sendMessage(Preferences.playerAddToRpg);
+                RpgEngine.addRpgPlayer(cPlayer);
                 break;
                 
             case "night":
+                cPlayer.sendMessage("THIS IS A DEVELOP COMMAND! But it works...in the moment");
                 Bukkit.dispatchCommand(sender, "/time set night");
                 RpgEngine.nightRpg();
+                break;
+                
+            case "day":
+                cPlayer.sendMessage("THIS IS A DEVELOP COMMAND! But it works...in the moment");
+                Bukkit.dispatchCommand(sender, "/time set day");
+                RpgEngine.dayRpg();
                 break;
 
             default:
