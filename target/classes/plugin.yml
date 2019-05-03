@@ -1,0 +1,14 @@
+name: roleplayPlugin
+main: com.neocop.roleplayplugin.Core.Main
+version: 1.0
+author: Neo_Mc Noah Elijah Till
+commands:
+    helloWorld:
+        description: just Hello World...yk?
+        usage: /<command> [player]
+    rpg:
+        description: configure all rpg stuff
+        usage: /<command> <help>
+    detectiv:
+        description: for the role Detectiv
+        usage: /<command>
