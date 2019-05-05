@@ -56,7 +56,7 @@ public class RpgEngine {
                     if (detektivNum == killerNum) {
                         detektivNum = ThreadLocalRandom.current().nextInt(0, players.length);
                     } else {
-                        return;
+                        break;
                     }
                 }
             }
