@@ -7,6 +7,7 @@ package com.neocop.roleplayplugin.Core;
 
 import java.util.HashMap;
 import com.neocop.roleplayplugin.commands.IntCommand;
+import com.neocop.roleplayplugin.utils.Preferences;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -26,13 +27,13 @@ public class commandHandler {
                 if (safe) {
                     commands.get(cmd.invoke).actionUser(cmd.args, cmd.sender, cmd.command);
                 } else {
-                    System.out.println("[Error]Command cant executet!");
+                    System.out.println(Preferences.consoleDes + " [Error]Command cant executet!");
                 }
             } else {
                 commands.get(cmd.invoke).actionServer(cmd.args, cmd.sender, cmd.command);
             }
         } else {
-            System.out.println("Command cant found");
+            System.out.println(Preferences.consoleDes + " Command cant found");
         }
     }
 

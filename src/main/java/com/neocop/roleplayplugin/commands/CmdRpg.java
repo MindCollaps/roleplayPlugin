@@ -104,7 +104,7 @@ public class CmdRpg implements IntCommand {
                         sender.sendMessage(answer);
                     }
                 } catch (Exception e) {
-                    System.out.println("[RPG PLUGIN ERROR]" + e);
+                    System.out.println(Preferences.consoleDes + " [ERROR]" + e);
                 }
                 break;
 
@@ -118,13 +118,17 @@ public class CmdRpg implements IntCommand {
                 break;
                 
             case "night":
-                current.sendMessage("THIS IS A DEVELOP COMMAND! But it works...in the moment");
+                current.sendMessage("THIS IS A DEVELOP COMMAND! But it works...in the moment...its freake´n Alpha MAAAN");
                 RpgEngine.nightRpg(sender);
                 break;
                 
             case "day":
-                current.sendMessage("THIS IS A DEVELOP COMMAND! But it works...in the moment");
+                current.sendMessage("THIS IS A DEVELOP COMMAND! But it works...in the moment...its freake´n Alpha MAAAN");
                 RpgEngine.dayRpg(sender);
+                break;
+                
+            case "info":
+                sender.sendMessage(Preferences.infoAboutPlugin);
                 break;
 
             default:

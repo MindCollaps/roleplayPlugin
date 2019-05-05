@@ -50,7 +50,7 @@ public class RpgEngine {
             int killerNum = ThreadLocalRandom.current().nextInt(0, players.length);
             int detektivNum = -400;
             if (players.length >= 4) {
-                System.out.println("[Roleplay Plugin]Detective Enabled");
+                System.out.println(Preferences.consoleDes + " Detective Enabled");
                 detektivNum = ThreadLocalRandom.current().nextInt(0, players.length);
                 while (true) {
                     if (detektivNum == killerNum) {
@@ -242,7 +242,7 @@ public class RpgEngine {
     }
 
     public static void killPlayer(RPGPlayer died, boolean voteKill) {
-        System.out.println("§ePlayer " + died.player.getDisplayName() + " died!");
+        System.out.println("Player " + died.player.getDisplayName() + " died!");
         killedPlayer.add(died.getPlayer().getDisplayName());
         rpgRolePlayer.remove(died.getPlayer().getDisplayName());
         rpgPlayer.remove(died.getPlayer().getDisplayName());

@@ -12,6 +12,7 @@ import com.neocop.roleplayplugin.commands.CmdRpgVote;
 import com.neocop.roleplayplugin.listener.rpgListener;
 import com.neocop.roleplayplugin.listener.leaveJoinListener;
 import com.neocop.roleplayplugin.roleplayCore.RpgEngine;
+import com.neocop.roleplayplugin.utils.Preferences;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -39,7 +40,7 @@ public class Main extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        getLogger().info("----------\nRoleplay plugin is disabled now!\n----------");
+        getLogger().info("----------Roleplay plugin is disabled now!----------");
     }
 
     @Override
@@ -76,7 +77,7 @@ public class Main extends JavaPlugin {
     }
 
     public void roleplayCountdown(final int countdown, final String endText, final String countText1, final String countText2) {
-        System.out.println("[Poleplay Plugin]Starts Roleplay");
+        System.out.println(Preferences.consoleDes + " Starts Roleplay");
         taskID = Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
             int count = countdown;
 

@@ -15,6 +15,8 @@ public class Preferences {
     public static int nightsDuration = 60;
     public static int voteDuration = 60;
     public static int roundsValue = 10;
+    
+    public static final String version = "1.0-SNAPSHOT";
 
     public static final String striche = "§r§e--------------------------------------------------§r";
     
@@ -68,7 +70,10 @@ public class Preferences {
             + "/" + commandNameRpg + " remove player <player> - Entfernt einen Spieler\n"
             + "/" + commandNameRpg + " list - Zeigt alle Spieler die am Roleplay beteiligt sind an\n"
             + "/" + commandNameRpg + " join - Fügt dich selbst zum Roleplay hinzu\n"
+            + "/" + commandNameRpg + " info - Zeigt ein paar infos über das Plugin usw."
             + "/" + commandNameRpg + " help - Zeigt diese Seite...wer hätte es gedacht..loool";
+    
+    public static final String infoAboutPlugin = striche + "§4§k12§r§eRoleplay Plugin§4§k12§r\n\n§6Idee, Entwickler: §bNoah Till (Neo_MC) De\n§6Arbeitszeit: §bbisher ca. 35 Stunden\n§6Entwickelt: §bseit 02.05.2019\n§6Version: §b" + version;
 
     public static final String helpDetectivCommon = "/" + commandNameDetective + commandModDetectiveAnalyze + " - Zeigt alle Spieler an, die einem Lügendetektortest unterzogen werden können.";
 
