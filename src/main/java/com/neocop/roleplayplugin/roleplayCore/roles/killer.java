@@ -23,14 +23,14 @@ import org.bukkit.inventory.meta.SkullMeta;
 public class killer implements RPGRole {
 
     @Override
-    public void start(Player player) {
-        player.sendTitle("Deine Rolle ist", "§cMurder!");
-        player.sendMessage(Preferences.killer);
-        RpgEngine.killer.add(new RPGPlayer(player, this));
+    public void start(RPGPlayer player) {
+        player.getPlayer().sendTitle("Deine Rolle ist", "§cMurder!");
+        player.getPlayer().sendMessage(Preferences.killer);
+        RpgEngine.killer.add(player);
     }
 
     @Override
-    public void actionNight(Player player) {
+    public void actionNight(RPGPlayer player) {
         Inventory inv = Bukkit.createInventory(null, 9 * 3, "§cKiller");
 
         ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (short) SkullType.PLAYER.ordinal());
@@ -38,19 +38,24 @@ public class killer implements RPGRole {
 
         Object[] players = RpgEngine.rpgPlayer.values().toArray();
         Player p = null;
+        int count = 9;
         for (int i = 0; players.length > i; i++) {
             p = (Player) players[i];
+            count++;
+            if(p.getDisplayName().equalsIgnoreCase(player.getPlayer().getName())){
+                count--;
+            }
             skullMeta.setOwner(p.getDisplayName());
             skullMeta.setDisplayName(p.getDisplayName());
             skull.setItemMeta(skullMeta);
-            inv.setItem(10 +i, skull);
+            inv.setItem(count, skull);
         }
-        player.openInventory(inv);
-        player.sendMessage(Preferences.rpgKillerNightAction);
+        player.getPlayer().openInventory(inv);
+        player.getPlayer().sendMessage(Preferences.rpgKillerNightAction);
     }
 
     @Override
-    public void actionDay(Player player) {
-        player.sendMessage(Preferences.rpgKillerDayAction);
+    public void actionDay(RPGPlayer player) {
+        player.getPlayer().sendMessage(Preferences.rpgKillerDayAction);
     }
 }

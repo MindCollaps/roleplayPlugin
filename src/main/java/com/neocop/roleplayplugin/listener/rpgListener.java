@@ -6,6 +6,7 @@
 package com.neocop.roleplayplugin.listener;
 
 import com.neocop.roleplayplugin.roleplayCore.RpgEngine;
+import com.neocop.roleplayplugin.roleplayCore.rpgUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -18,42 +19,56 @@ import org.bukkit.inventory.ItemStack;
  *
  * @author Noah
  */
-public class rpgListener implements Listener{
-    
-    
+public class rpgListener implements Listener {
+
     @EventHandler
-    public void killListener(PlayerDeathEvent event){
-        
-    }
-    
-    @EventHandler
-    public void onClick(InventoryClickEvent e){
-        if(!RpgEngine.rpgRunning){
+    public void onClick(InventoryClickEvent e) {
+        if (!RpgEngine.rpgRunning) {
             return;
         }
-        switch(e.getInventory().getTitle()){
+        Player current = Bukkit.getPlayer(e.getView().getPlayer().getUniqueId());
+        switch (e.getInventory().getTitle()) {
             case "§cKiller":
                 e.setCancelled(true);
                 ItemStack i = e.getCurrentItem();
                 Player prey = Bukkit.getPlayer(i.getItemMeta().getDisplayName());
                 e.getInventory().clear();
-                Bukkit.getPlayer(e.getView().getPlayer().getUniqueId()).closeInventory();
-                RpgEngine.killPlayer(prey, Bukkit.getPlayer(e.getView().getPlayer().getUniqueId()));
+                current.closeInventory();
+                 {
+                    try {
+                        RpgEngine.killPlayer(rpgUtils.getRpgPlayerByName(prey.getDisplayName()), false);
+                    } catch (Exception ex) {
+                        System.out.println(ex);
+                        current.sendMessage("§cError");
+                    }
+                }
                 break;
             case "§9Detectiv":
                 e.setCancelled(true);
                 ItemStack in = e.getCurrentItem();
                 Player test = Bukkit.getPlayer(in.getItemMeta().getDisplayName());
                 e.getInventory().clear();
-                Player current = Bukkit.getPlayer(e.getView().getPlayer().getUniqueId());
                 current.closeInventory();
                 boolean bad = RpgEngine.analyzePlayer(current, test);
-                if(bad){
+                if (bad) {
                     current.sendMessage("§aTestergebnis Positiv! Er ist definitiv der Killer! Bitte allen anderen UNBEDINGT mitteilen!");
                 } else {
                     current.sendMessage("§cTestergebnis Negativ! Was nicht bedeutet, dass es kein Killer ist, vielleicht kann er einfach nur gut Lügen.");
                 }
                 break;
+        }
+    }
+
+    //Unvorhergesehner Tod
+    @EventHandler
+    public void playerDied(PlayerDeathEvent event) {
+        if (RpgEngine.rpgRunning) {
+            Player died = event.getEntity();
+            if (RpgEngine.rpgPlayer.containsKey(died.getDisplayName())) {
+                if (RpgEngine.killedPlayer.contains(died.getDisplayName())) {
+                    rpgUtils.playerDiedOrLeaveWithoutExpection(died);
+                }
+            }
         }
     }
 }

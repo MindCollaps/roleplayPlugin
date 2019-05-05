@@ -5,10 +5,13 @@ author: Neo_Mc Noah Elijah Till
 commands:
     helloWorld:
         description: just Hello World...yk?
-        usage: /<command> [player]
+        usage: /<command> 
     rpg:
         description: configure all rpg stuff
-        usage: /<command> <help>
+        usage: /<command> help - for more help
     detectiv:
         description: for the role Detectiv
-        usage: /<command>
+        usage: /<command> - only for detective
+    vote:
+        description: to vote which player should die
+        usage: /<command> [player] - vote for one player

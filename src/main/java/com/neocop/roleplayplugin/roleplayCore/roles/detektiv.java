@@ -8,7 +8,6 @@ package com.neocop.roleplayplugin.roleplayCore.roles;
 import com.neocop.roleplayplugin.roleplayCore.RPGPlayer;
 import com.neocop.roleplayplugin.roleplayCore.RpgEngine;
 import com.neocop.roleplayplugin.utils.Preferences;
-import org.bukkit.entity.Player;
 
 /**
  *
@@ -17,21 +16,21 @@ import org.bukkit.entity.Player;
 public class detektiv implements RPGRole{
 
     @Override
-    public void start(Player player) {
-        player.sendTitle("Deine Rolle ist", "§9Detektiv!");
-        player.sendMessage(Preferences.detectiv);
-        RpgEngine.villagerTeam.add(new RPGPlayer(player, this));
-        RpgEngine.detective.add(new RPGPlayer(player, this));
+    public void start(RPGPlayer player) {
+        player.getPlayer().sendTitle("Deine Rolle ist", "§9Detektiv!");
+        player.getPlayer().sendMessage(Preferences.detectiv);
+        RpgEngine.villagerTeam.add(player);
+        RpgEngine.detective.add(player);
     }
 
     @Override
-    public void actionNight(Player player) {
-        player.sendMessage(Preferences.rpgDetectivNightAction);
+    public void actionNight(RPGPlayer player) {
+        player.getPlayer().sendMessage(Preferences.rpgDetectivNightAction);
     }
 
     @Override
-    public void actionDay(Player player) {
-        player.sendMessage(Preferences.rpgDetectivDayAction);
+    public void actionDay(RPGPlayer player) {
+        player.getPlayer().sendMessage(Preferences.rpgDetectivDayAction);
     }
     
 }

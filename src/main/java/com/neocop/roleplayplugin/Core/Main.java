@@ -7,7 +7,8 @@ package com.neocop.roleplayplugin.Core;
 
 import com.neocop.roleplayplugin.commands.CmdHelloWorld;
 import com.neocop.roleplayplugin.commands.CmdRpg;
-import com.neocop.roleplayplugin.commands.CmdDetectiv;
+import com.neocop.roleplayplugin.commands.CmdRpgDetective;
+import com.neocop.roleplayplugin.commands.CmdRpgVote;
 import com.neocop.roleplayplugin.listener.rpgListener;
 import com.neocop.roleplayplugin.listener.leaveJoinListener;
 import com.neocop.roleplayplugin.roleplayCore.RpgEngine;
@@ -15,7 +16,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -67,7 +67,8 @@ public class Main extends JavaPlugin {
     public void addCommands() {
         commandHandler.commands.put("helloworld", new CmdHelloWorld());
         commandHandler.commands.put("rpg", new CmdRpg());
-        commandHandler.commands.put("detectiv", new CmdDetectiv());
+        commandHandler.commands.put("detectiv", new CmdRpgDetective());
+        commandHandler.commands.put("vote", new CmdRpgVote());
     }
 
     public void sendConsoleMessage(String text) {

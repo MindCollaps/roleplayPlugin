@@ -17,20 +17,20 @@ import org.bukkit.entity.Player;
 public class villager implements RPGRole{
 
     @Override
-    public void start(Player player) {
-        player.sendTitle("Deine Rolle ist", "§aVillager!");
-        player.sendMessage(Preferences.villager);
-        RpgEngine.villagerTeam.add(new RPGPlayer(player, this));
+    public void start(RPGPlayer player) {
+        player.getPlayer().sendTitle("Deine Rolle ist", "§aVillager!");
+        player.getPlayer().sendMessage(Preferences.villager);
+        RpgEngine.villagerTeam.add(player);
     }
 
     @Override
-    public void actionNight(Player player) {
-        player.sendMessage(Preferences.rpgVillagerNightAction);
+    public void actionNight(RPGPlayer player) {
+        player.getPlayer().sendMessage(Preferences.rpgVillagerNightAction);
     }
 
     @Override
-    public void actionDay(Player player) {
-        player.sendMessage(Preferences.rpgVillagerDayAction);
+    public void actionDay(RPGPlayer player) {
+        player.getPlayer().sendMessage(Preferences.rpgVillagerDayAction);
     }
     
 }

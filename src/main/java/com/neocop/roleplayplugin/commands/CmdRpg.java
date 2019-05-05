@@ -7,9 +7,7 @@ package com.neocop.roleplayplugin.commands;
 
 import com.neocop.roleplayplugin.roleplayCore.RpgEngine;
 import com.neocop.roleplayplugin.utils.Preferences;
-import java.util.Collection;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -27,7 +25,7 @@ public class CmdRpg implements IntCommand {
 
     @Override
     public void actionUser(String[] args, CommandSender sender, Command command) {
-        Player cPlayer = (Player) sender;
+        Player current = (Player) sender;
         switch (args[0]) {
             case "start":
                 RpgEngine.startRpg((Player) sender);
@@ -88,7 +86,7 @@ public class CmdRpg implements IntCommand {
                 break;
 
             case "stop":
-                RpgEngine.stopRpg(cPlayer, true);
+                RpgEngine.stopRpg(current, true);
                 break;
 
             case "list":
@@ -111,24 +109,22 @@ public class CmdRpg implements IntCommand {
                 break;
 
             case "join":
-                if (RpgEngine.rpgPlayer.containsKey(cPlayer.getDisplayName())) {
-                    cPlayer.sendMessage(Preferences.playerAlreadyInRpg);
+                if (RpgEngine.rpgPlayer.containsKey(current.getDisplayName())) {
+                    current.sendMessage(Preferences.playerAlreadyInRpg);
                     return;
                 }
-                cPlayer.sendMessage(Preferences.playerAddToRpg);
-                RpgEngine.addRpgPlayer(cPlayer);
+                current.sendMessage(Preferences.playerAddToRpg);
+                RpgEngine.addRpgPlayer(current);
                 break;
                 
             case "night":
-                cPlayer.sendMessage("THIS IS A DEVELOP COMMAND! But it works...in the moment");
-                Bukkit.dispatchCommand(sender, "/time set night");
-                RpgEngine.nightRpg();
+                current.sendMessage("THIS IS A DEVELOP COMMAND! But it works...in the moment");
+                RpgEngine.nightRpg(sender);
                 break;
                 
             case "day":
-                cPlayer.sendMessage("THIS IS A DEVELOP COMMAND! But it works...in the moment");
-                Bukkit.dispatchCommand(sender, "/time set day");
-                RpgEngine.dayRpg();
+                current.sendMessage("THIS IS A DEVELOP COMMAND! But it works...in the moment");
+                RpgEngine.dayRpg(sender);
                 break;
 
             default:

@@ -5,14 +5,14 @@
  */
 package com.neocop.roleplayplugin.roleplayCore.roles;
 
-import org.bukkit.entity.Player;
+import com.neocop.roleplayplugin.roleplayCore.RPGPlayer;
 
 /**
  *
  * @author Noah
  */
 public interface RPGRole {
-    public void start(Player player);
-    public void actionNight(Player player);
-    public void actionDay(Player player);
+    public void start(RPGPlayer player);
+    public void actionNight(RPGPlayer player);
+    public void actionDay(RPGPlayer player);
 }
