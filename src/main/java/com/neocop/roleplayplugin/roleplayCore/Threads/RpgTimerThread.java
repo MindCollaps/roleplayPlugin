@@ -7,15 +7,11 @@ package com.neocop.roleplayplugin.roleplayCore.Threads;
 
 import com.neocop.roleplayplugin.roleplayCore.RPGPlayer;
 import com.neocop.roleplayplugin.roleplayCore.RpgEngine;
-import static com.neocop.roleplayplugin.roleplayCore.RpgEngine.rounds;
 import static com.neocop.roleplayplugin.roleplayCore.RpgEngine.rpgRolePlayer;
-import static com.neocop.roleplayplugin.roleplayCore.RpgEngine.stopRpg;
-import static com.neocop.roleplayplugin.roleplayCore.RpgEngine.villagerTeam;
-import static com.neocop.roleplayplugin.roleplayCore.RpgEngine.voteAllowed;
 import com.neocop.roleplayplugin.utils.Preferences;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.bukkit.Bukkit;
+import java.util.Timer;
+import java.util.TimerTask;
+import jdk.nashorn.internal.codegen.CompilerConstants;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 
@@ -28,7 +24,6 @@ public class RpgTimerThread extends Thread {
     @Override
     public void run() {
         System.out.println(Preferences.consoleDes + " External Thread startet!");
-        sleep(2000);
         Player p = null;
         Object[] playerz = RpgEngine.rpgRolePlayer.values().toArray();
         RPGPlayer rpP = null;
@@ -38,8 +33,9 @@ public class RpgTimerThread extends Thread {
             p.setGameMode(GameMode.SURVIVAL);
             rpgRolePlayer.get(p.getDisplayName()).getRole().getRole().start(rpP);
         }
-        Bukkit.broadcast(Preferences.globalRules, null);
-        
+        System.out.println("sos");
+        ccNight();
+        //pluginUtils.sendBrodcastMessage(Preferences.globalRules);
     }
 
     private static void ccDay() {
@@ -52,8 +48,13 @@ public class RpgTimerThread extends Thread {
         } else {
             RpgEngine.dayRpg();
         }
-        sleep(10 * Preferences.daysDuration);
-        ccVote();
+        
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                ccVote();
+            }
+        }, 10 * Preferences.daysDuration);
     }
 
     private static void ccNight() {
@@ -61,22 +62,26 @@ public class RpgTimerThread extends Thread {
         RpgEngine.voteAllowed = false;
         RpgEngine.rounds++;
         RpgEngine.nightRpg();
-        sleep(10 * Preferences.nightsDuration);
-        ccDay();
-
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                ccDay();
+            }
+        }, 10 * Preferences.nightsDuration);
     }
 
     private static void ccVote() {
         RpgEngine.voteRpg();
-        sleep(10 * Preferences.voteDuration);
-        ccNight();
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                ccNight();
+            }
+        }, 10 * Preferences.voteDuration);
+        
     }
     
-    private static void sleep(int time){
-        try {
-            Thread.sleep(time);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(RpgTimerThread.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public static void exit() {
+        RpgTimerThread.exit();
     }
 }

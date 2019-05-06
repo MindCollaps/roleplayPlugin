@@ -5,6 +5,7 @@
  */
 package com.neocop.roleplayplugin.utils;
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -20,5 +21,9 @@ public class pluginUtils {
         } else {
             return false;
         }
+    }
+    
+    public static void sendBrodcastMessage(String msg){
+        Bukkit.broadcast(msg, null);
     }
 }

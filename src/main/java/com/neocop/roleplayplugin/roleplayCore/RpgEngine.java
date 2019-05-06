@@ -47,14 +47,17 @@ public class RpgEngine {
             world = player.getWorld();
 
             Object[] players = RpgEngine.rpgPlayer.values().toArray();
-            int killerNum = ThreadLocalRandom.current().nextInt(0, players.length);
 
             //rollen die benutzt werden können
             ArrayList<RPGRole> useRoles = new ArrayList<>();
 
             for (int i = 1; i < rpgRoles.size(); i++) {
-                if (rpgRoles.get(i).getNeededPlayers() <= players.length) {
-                    useRoles.add(rpgRoles.get(i));
+                if (players.length >= rpgRoles.get(i).getNeededPlayers()) {
+                    if (players.length > i +1) {
+                        useRoles.add(rpgRoles.get(i));
+                    } else {
+                        break;
+                    }
                 }
             }
 
@@ -62,11 +65,19 @@ public class RpgEngine {
             ArrayList randomRoles = new ArrayList();
             for (int i = 0; i < players.length; i++) {
                 p = (Player) players[i];
-                if (useRoles.size() >= randomRoles.size()) {
+                if (useRoles.size() <= randomRoles.size()) {
                     for (int j = 0; j < useRoles.size(); j++) {
-                        int num = ThreadLocalRandom.current().nextInt(0, players.length);
-                        while (randomRoles.contains(num)) {
-                            num = ThreadLocalRandom.current().nextInt(0, players.length);
+                        int num = ThreadLocalRandom.current().nextInt(0, useRoles.size());
+                        try {
+                            for(int k = 0; k < 100; k++) {
+                                if (randomRoles.contains(num)) {
+                                    num = ThreadLocalRandom.current().nextInt(0, useRoles.size());
+                                } else {
+                                    break;
+                                }
+                            }
+                        } catch (Exception e) {
+                            System.out.println(e);
                         }
                         randomRoles.add(num);
                         rpgRolePlayer.put(p.getDisplayName(), new RPGPlayer(p, useRoles.get(num)));

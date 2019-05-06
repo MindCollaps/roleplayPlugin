@@ -96,6 +96,7 @@ public class Main extends JavaPlugin {
                     Bukkit.broadcastMessage(endText);
                     new RpgTimerThread().run();
                     Bukkit.getScheduler().cancelTask(taskID);
+                    return;
                 } else {
                  Bukkit.broadcastMessage(countText1 + count + countText2);
                 count--;
