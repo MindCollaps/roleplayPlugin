@@ -80,9 +80,9 @@ public class Main extends JavaPlugin {
     }
 
     public void addRoles(){
+        RpgEngine.rpgRoles.add(new RPGRole(new villager(), "villager", 1, 0));
         RpgEngine.rpgRoles.add(new RPGRole(new killer(), "killer", 0, 0));
         RpgEngine.rpgRoles.add(new RPGRole(new detektiv(), "deteltiv", 1, 4));
-        RpgEngine.rpgRoles.add(new RPGRole(new villager(), "villager", 1, 0));
     }
 
     public void roleplayCountdown(final int countdown, final String endText, final String countText1, final String countText2) {

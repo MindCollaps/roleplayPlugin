@@ -5,20 +5,13 @@
  */
 package com.neocop.roleplayplugin.roleplayCore;
 
-import com.neocop.roleplayplugin.roleplayCore.Threads.RpgTimerThread;
-import com.neocop.roleplayplugin.roleplayCore.roles.detektiv;
-import com.neocop.roleplayplugin.roleplayCore.roles.killer;
-import com.neocop.roleplayplugin.roleplayCore.roles.villager;
 import com.neocop.roleplayplugin.utils.Preferences;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.ThreadLocalRandom;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.World;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 /**
@@ -30,7 +23,7 @@ public class RpgEngine {
     public static HashMap<String, Player> onlinePlayer = new HashMap<>();
     public static HashMap<String, Player> rpgPlayer = new HashMap<>();
     public static HashMap<String, RPGPlayer> rpgRolePlayer = new HashMap<>();
-    
+
     public static ArrayList<RPGRole> rpgRoles = new ArrayList<>();
 
     public static ArrayList<String> playersWhichHasVoted = new ArrayList<>();
@@ -50,24 +43,38 @@ public class RpgEngine {
     public static void startRpg(Player player) {
         if (rpgPlayer.size() >= 3) {
             rpgRunning = true;
-            
+
             world = player.getWorld();
-            
+
             Object[] players = RpgEngine.rpgPlayer.values().toArray();
             int killerNum = ThreadLocalRandom.current().nextInt(0, players.length);
-            
-            int summRoles = rpgRoles.size();
-            int[] avalibleRoles = new int[0];
-            
-            for (int i = 0; i < rpgRoles.size(); i++) {
-                if(rpgRoles.get(i).getNeededPlayers() <= players.length){
-                    avalibleRoles[avalibleRoles.length+1] = i;
+
+            //rollen die benutzt werden können
+            ArrayList<RPGRole> useRoles = new ArrayList<>();
+
+            for (int i = 1; i < rpgRoles.size(); i++) {
+                if (rpgRoles.get(i).getNeededPlayers() <= players.length) {
+                    useRoles.add(rpgRoles.get(i));
                 }
             }
+
+            Player p = null;
+            ArrayList randomRoles = new ArrayList();
             for (int i = 0; i < players.length; i++) {
-                
+                p = (Player) players[i];
+                if (useRoles.size() >= randomRoles.size()) {
+                    for (int j = 0; j < useRoles.size(); j++) {
+                        int num = ThreadLocalRandom.current().nextInt(0, players.length);
+                        while (randomRoles.contains(num)) {
+                            num = ThreadLocalRandom.current().nextInt(0, players.length);
+                        }
+                        randomRoles.add(num);
+                        rpgRolePlayer.put(p.getDisplayName(), new RPGPlayer(p, useRoles.get(num)));
+                    }
+                } else {
+                    rpgRolePlayer.put(p.getDisplayName(), new RPGPlayer(p, rpgRoles.get(0)));
+                }
             }
-            
         } else {
             player.sendMessage(Preferences.notEnoughPlayerForRpg);
         }
@@ -98,7 +105,7 @@ public class RpgEngine {
                 System.out.println(e);
             }
         }
-        
+
         //night
         Object[] players = RpgEngine.rpgRolePlayer.values().toArray();
         Player p = null;
