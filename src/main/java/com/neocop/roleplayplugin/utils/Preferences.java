@@ -18,7 +18,7 @@ public class Preferences {
     
     public static final String version = "1.0-SNAPSHOT";
 
-    public static final String striche = "§r§e--------------------------------------------------§r";
+    public static final String striche = "\n§r§e--------------------------------------------------§r\n";
     
     public static final String consoleDes = "[Roleplay Plugin]";
 
@@ -33,7 +33,7 @@ public class Preferences {
     public static final String noPermissionDetectiveRoleNeeded = "§cDu musst detective sein, um diesen Befehl auszuführen!";
     public static final String noPermissionAlreadyDead = "§cDu bist bereits gestorben!";
     public static final String noPermissionVoteNotActive = "§cVoten ist nur während der Vote Phase möglich!";
-    public static final String notEnoughPlayerForRpg = "§eEs sind nicht genug Spieler in der mitchmach Liste. Füge sie mit dem add command hinzu!";
+    public static final String notEnoughPlayerForRpg = "§eEs sind nicht genug Spieler in der Spieler Liste. Füge sie mit dem add command hinzu!";
     public static final String noRunningRpg = "§cEs ist kein Roleplay im gange!";
 
     public static final String playerAddToRpg = "§aDu wurdest zum Roleplay hinzugefügt!";
@@ -73,7 +73,7 @@ public class Preferences {
             + "/" + commandNameRpg + " info - Zeigt ein paar infos über das Plugin usw."
             + "/" + commandNameRpg + " help - Zeigt diese Seite...wer hätte es gedacht..loool";
     
-    public static final String infoAboutPlugin = striche + "§4§k12§r§eRoleplay Plugin§4§k12§r\n\n§6Idee, Entwickler: §bNoah Till (Neo_MC) De\n§6Arbeitszeit: §bbisher ca. 35 Stunden\n§6Entwickelt: §bseit 02.05.2019\n§6Version: §b" + version;
+    public static final String infoAboutPlugin = striche + "§4§k12§r§eRoleplay Plugin§4§k12§r\n\n§6Idee, Entwickler: §bNoah Till (Neo_MC) De(Germany)\n§6Arbeitszeit: §bbisher ca. 35 Stunden\n§6Entwickelt: §bseit 02.05.2019\n§6Version: §b" + version + striche;
 
     public static final String helpDetectivCommon = "/" + commandNameDetective + commandModDetectiveAnalyze + " - Zeigt alle Spieler an, die einem Lügendetektortest unterzogen werden können.";
 

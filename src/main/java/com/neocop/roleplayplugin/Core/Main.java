@@ -11,7 +11,12 @@ import com.neocop.roleplayplugin.commands.CmdRpgDetective;
 import com.neocop.roleplayplugin.commands.CmdRpgVote;
 import com.neocop.roleplayplugin.listener.rpgListener;
 import com.neocop.roleplayplugin.listener.leaveJoinListener;
+import com.neocop.roleplayplugin.roleplayCore.RPGRole;
 import com.neocop.roleplayplugin.roleplayCore.RpgEngine;
+import com.neocop.roleplayplugin.roleplayCore.Threads.RpgTimerThread;
+import com.neocop.roleplayplugin.roleplayCore.roles.detektiv;
+import com.neocop.roleplayplugin.roleplayCore.roles.killer;
+import com.neocop.roleplayplugin.roleplayCore.roles.villager;
 import com.neocop.roleplayplugin.utils.Preferences;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -35,6 +40,7 @@ public class Main extends JavaPlugin {
         }
         addListeners();
         addCommands();
+        addRoles();
         getLogger().info("----------Roleplay plugin is enabled now!----------");
     }
 
@@ -70,10 +76,13 @@ public class Main extends JavaPlugin {
         commandHandler.commands.put("rpg", new CmdRpg());
         commandHandler.commands.put("detectiv", new CmdRpgDetective());
         commandHandler.commands.put("vote", new CmdRpgVote());
+        //commandHandler.commands.put("troll", new CmdTrole());
     }
 
-    public void sendConsoleMessage(String text) {
-        getLogger().info(text);
+    public void addRoles(){
+        RpgEngine.rpgRoles.add(new RPGRole(new killer(), "killer", 0, 0));
+        RpgEngine.rpgRoles.add(new RPGRole(new detektiv(), "deteltiv", 1, 4));
+        RpgEngine.rpgRoles.add(new RPGRole(new villager(), "villager", 1, 0));
     }
 
     public void roleplayCountdown(final int countdown, final String endText, final String countText1, final String countText2) {
@@ -85,10 +94,11 @@ public class Main extends JavaPlugin {
             public void run() {
                 if (count <= 0) {
                     Bukkit.broadcastMessage(endText);
+                    new RpgTimerThread().run();
                     Bukkit.getScheduler().cancelTask(taskID);
                 } else {
                  Bukkit.broadcastMessage(countText1 + count + countText2);
-                count--;   
+                count--;
                 }
             }
         }, 0, 20);

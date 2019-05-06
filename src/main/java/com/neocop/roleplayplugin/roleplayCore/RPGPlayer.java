@@ -6,29 +6,27 @@
 package com.neocop.roleplayplugin.roleplayCore;
 
 import org.bukkit.entity.Player;
-import com.neocop.roleplayplugin.roleplayCore.roles.RPGRole;
 
 /**
  *
  * @author Noah
  */
 public class RPGPlayer {
-    
-    Player player;
-    RPGRole role;
-    String roleName;
-    boolean protect;
-    boolean alive;
-    
-    public RPGPlayer(Player player, RPGRole role, String roleName){
+
+    public Player player;
+    public RPGRole role;
+
+    public boolean protect;
+    public boolean alive;
+
+    public RPGPlayer(Player player, RPGRole role, String roleName) {
         this.player = player;
         this.role = role;
-        this.roleName = roleName;
         this.alive = true;
         this.protect = false;
     }
-    
-        public Player getPlayer() {
+
+    public Player getPlayer() {
         return player;
     }
 
@@ -42,14 +40,6 @@ public class RPGPlayer {
 
     public void setRole(RPGRole role) {
         this.role = role;
-    }
-
-    public String getRoleName() {
-        return roleName;
-    }
-
-    public void setRoleName(String roleName) {
-        this.roleName = roleName;
     }
 
     public boolean isProtect() {

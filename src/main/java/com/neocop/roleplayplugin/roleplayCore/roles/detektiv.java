@@ -13,7 +13,7 @@ import com.neocop.roleplayplugin.utils.Preferences;
  *
  * @author Noah
  */
-public class detektiv implements RPGRole{
+public class detektiv implements Role{
 
     @Override
     public void start(RPGPlayer player) {

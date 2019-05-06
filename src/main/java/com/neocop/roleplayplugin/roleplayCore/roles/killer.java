@@ -20,7 +20,7 @@ import org.bukkit.inventory.meta.SkullMeta;
  *
  * @author Noah
  */
-public class killer implements RPGRole {
+public class killer implements Role {
 
     @Override
     public void start(RPGPlayer player) {

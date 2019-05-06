@@ -5,6 +5,7 @@
  */
 package com.neocop.roleplayplugin.roleplayCore;
 
+import com.neocop.roleplayplugin.roleplayCore.Threads.RpgTimerThread;
 import com.neocop.roleplayplugin.roleplayCore.roles.detektiv;
 import com.neocop.roleplayplugin.roleplayCore.roles.killer;
 import com.neocop.roleplayplugin.roleplayCore.roles.villager;
@@ -16,6 +17,7 @@ import java.util.TimerTask;
 import java.util.concurrent.ThreadLocalRandom;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
+import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -28,6 +30,8 @@ public class RpgEngine {
     public static HashMap<String, Player> onlinePlayer = new HashMap<>();
     public static HashMap<String, Player> rpgPlayer = new HashMap<>();
     public static HashMap<String, RPGPlayer> rpgRolePlayer = new HashMap<>();
+    
+    public static ArrayList<RPGRole> rpgRoles = new ArrayList<>();
 
     public static ArrayList<String> playersWhichHasVoted = new ArrayList<>();
     public static ArrayList<String> playerWhichIsVoted = new ArrayList<>();
@@ -35,128 +39,93 @@ public class RpgEngine {
     public static ArrayList<RPGPlayer> killer = new ArrayList<>();
     public static ArrayList<RPGPlayer> detective = new ArrayList<>();
     public static ArrayList<RPGPlayer> villagerTeam = new ArrayList<>();
-    
+
     public static ArrayList<String> killedPlayer = new ArrayList<>();
 
     public static boolean rpgRunning = false;
     public static boolean voteAllowed = false;
     public static int rounds = 0;
+    public static World world;
 
     public static void startRpg(Player player) {
         if (rpgPlayer.size() >= 3) {
             rpgRunning = true;
-
+            
+            world = player.getWorld();
+            
             Object[] players = RpgEngine.rpgPlayer.values().toArray();
             int killerNum = ThreadLocalRandom.current().nextInt(0, players.length);
-            int detektivNum = -400;
-            if (players.length >= 4) {
-                System.out.println(Preferences.consoleDes + " Detective Enabled");
-                detektivNum = ThreadLocalRandom.current().nextInt(0, players.length);
-                while (true) {
-                    if (detektivNum == killerNum) {
-                        detektivNum = ThreadLocalRandom.current().nextInt(0, players.length);
-                    } else {
-                        break;
-                    }
+            
+            int summRoles = rpgRoles.size();
+            int[] avalibleRoles = new int[0];
+            
+            for (int i = 0; i < rpgRoles.size(); i++) {
+                if(rpgRoles.get(i).getNeededPlayers() <= players.length){
+                    avalibleRoles[avalibleRoles.length+1] = i;
                 }
             }
-            Player p = null;
-            for (int i = 0; players.length > i; i++) {
-                p = (Player) players[i];
-                if (i == killerNum) {
-                    rpgRolePlayer.put(player.getDisplayName(), new RPGPlayer(player, new killer(), "killer"));
-                } else if (i == detektivNum) {
-                    rpgRolePlayer.put(player.getDisplayName(), new RPGPlayer(player, new detektiv(), "detektiv"));
-                } else {
-                    rpgRolePlayer.put(player.getDisplayName(), new RPGPlayer(player, new villager(), "villager"));
-                }
+            for (int i = 0; i < players.length; i++) {
+                
             }
-            //start roleplay
-            new Timer().schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    Player p = null;
-                    Object[] playerz = RpgEngine.rpgRolePlayer.values().toArray();
-                    RPGPlayer rpP = null;
-                    for (int i = 0; playerz.length > i; i++) {
-                        rpP = (RPGPlayer) playerz[i];
-                        p = rpP.player;
-                        p.setGameMode(GameMode.SURVIVAL);
-                        rpgRolePlayer.get(p.getDisplayName()).role.start(rpP);
-                    }
-                }
-            }, 11000);
             
-            new Timer().schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    Bukkit.broadcast(Preferences.globalRules, null);
-                }
-            }, 20000);
-            
-            final Player playerForTimer = player;
-            new Timer().schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    ccNight(playerForTimer);
-                }
-            }, 25000);
         } else {
             player.sendMessage(Preferences.notEnoughPlayerForRpg);
         }
     }
 
-    public static void nightRpg(CommandSender senderForCmd) {
+    public static void nightRpg() {
         //Vote kill
-        try{
-        int votedPlayers = RpgEngine.playerWhichIsVoted.size();
-        double value = RpgEngine.rpgRolePlayer.size() / 4 * 3;
-        boolean someoneDied = false;
-        for (int i = 0; i < RpgEngine.playerWhichIsVoted.size(); i++) {
-            int votes = RpgEngine.playerWhichIsVoted.indexOf(RpgEngine.playerWhichIsVoted.get(i));
-            if (votes >= value) {
-                someoneDied = true;
-                int procentqValue = votedPlayers / 100 * votes;
-                int procent = procentqValue * 100;
-                Bukkit.broadcast("§eSpieler " + RpgEngine.playerWhichIsVoted.get(i) + " muss sterben! Er hat " + procent + "% der Stimmen", null);
-                    killPlayer(rpgUtils.getRpgPlayerByName(RpgEngine.playerWhichIsVoted.get(i)), voteAllowed);
-                break;
+        if (rounds > 0) {
+            try {
+                int votedPlayers = RpgEngine.playerWhichIsVoted.size();
+                double value = RpgEngine.rpgRolePlayer.size() / 4 * 3;
+                boolean someoneDied = false;
+                for (int i = 0; i < RpgEngine.playerWhichIsVoted.size(); i++) {
+                    int votes = RpgEngine.playerWhichIsVoted.indexOf(RpgEngine.playerWhichIsVoted.get(i));
+                    if (votes >= value) {
+                        someoneDied = true;
+                        int procentqValue = votedPlayers / 100 * votes;
+                        int procent = procentqValue * 100;
+                        Bukkit.broadcast("§eSpieler " + RpgEngine.playerWhichIsVoted.get(i) + " muss sterben! Er hat " + procent + "% der Stimmen", null);
+                        killPlayer(rpgUtils.getRpgPlayerByName(RpgEngine.playerWhichIsVoted.get(i)), voteAllowed);
+                        break;
+                    }
+                }
+                if (!someoneDied) {
+                    Bukkit.broadcast(Preferences.globalNobodyDied, null);
+                }
+            } catch (Exception e) {
+                System.out.println(e);
             }
         }
-        if (!someoneDied) {
-            Bukkit.broadcast(Preferences.globalNobodyDied, null);
-        }
-        } catch (Exception e){
-            System.out.println(e);
-        }
-
+        
         //night
-        Bukkit.dispatchCommand(senderForCmd, "/time set night");
         Object[] players = RpgEngine.rpgRolePlayer.values().toArray();
         Player p = null;
         RPGPlayer rpP = null;
+        world.setTime(18000);
         for (int i = 0; players.length > i; i++) {
             rpP = (RPGPlayer) players[i];
             if (rpP.alive) {
-                rpgRolePlayer.get(rpP.player.getDisplayName()).role.actionNight(rpP);
+                rpgRolePlayer.get(rpP.player.getDisplayName()).getRole().getRole().actionNight(rpP);
             }
         }
     }
 
-    public static void dayRpg(CommandSender senderForCmd) {
-        Bukkit.dispatchCommand(senderForCmd, "/time set day");
+    public static void dayRpg() {
         Object[] players = RpgEngine.rpgRolePlayer.values().toArray();
         Player p = null;
         RPGPlayer rpP = null;
+        world.setTime(0);
         for (int i = 0; players.length > i; i++) {
             rpP = (RPGPlayer) players[i];
             if (rpP.alive) {
-                rpgRolePlayer.get(rpP.player.getDisplayName()).role.actionDay(rpP);
+                rpgRolePlayer.get(rpP.player.getDisplayName()).getRole().getRole().actionDay(rpP);
             }
         }
     }
 
-    public static void voteRpg(CommandSender senderForCmd) {
+    public static void voteRpg() {
         voteAllowed = true;
         Bukkit.broadcast(Preferences.globalVoteBegin, null);
     }
@@ -179,49 +148,21 @@ public class RpgEngine {
         }
     }
 
-    public static void ccDay(CommandSender senderForCmd) {
-        final CommandSender s = senderForCmd;
-        if (rounds >= Preferences.roundsValue) {
-            stopRpg((Player) s, false);
-            return;
-        } else if (villagerTeam.size() <= 1) {
-            stopRpg((Player) s, false);
-            return;
-        } else {
-            dayRpg(s);
+    public static void stopRpg(boolean abort) {
+        if (rpgRunning) {
+            if (abort) {
+                Bukkit.broadcast(Preferences.globalRpgGetCanceled, null);
+            }
+            rounds = 0;
+            rpgRunning = false;
+            //clear Maps an Arrays
+            rpgPlayer.clear();
+            rpgRolePlayer.clear();
+            killer.clear();
+            villagerTeam.clear();
+            detective.clear();
+
         }
-        new Timer().schedule(new TimerTask() {
-            @Override
-            public void run() {
-                ccVote(s);
-            }
-        }, 10 * Preferences.daysDuration);
-    }
-
-    private static void ccNight(CommandSender senderForCmd) {
-        //undo change from ccVote
-        voteAllowed = false;
-
-        rounds++;
-        final CommandSender s = senderForCmd;
-        nightRpg(s);
-        new Timer().schedule(new TimerTask() {
-            @Override
-            public void run() {
-                ccDay(s);
-            }
-        }, 10 * Preferences.nightsDuration);
-    }
-
-    private static void ccVote(CommandSender senderForCmd) {
-        final CommandSender s = senderForCmd;
-        voteRpg(s);
-        new Timer().schedule(new TimerTask() {
-            @Override
-            public void run() {
-                ccNight(s);
-            }
-        }, 10 * Preferences.voteDuration);
     }
 
     public static boolean analyzePlayer(Player act, Player analye) {

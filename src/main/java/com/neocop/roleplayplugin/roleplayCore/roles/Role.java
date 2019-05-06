@@ -11,7 +11,7 @@ import com.neocop.roleplayplugin.roleplayCore.RPGPlayer;
  *
  * @author Noah
  */
-public interface RPGRole {
+public interface Role {
     public void start(RPGPlayer player);
     public void actionNight(RPGPlayer player);
     public void actionDay(RPGPlayer player);

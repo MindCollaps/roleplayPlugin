@@ -34,23 +34,25 @@ public class CmdRpg implements IntCommand {
             case "add":
                 switch (args[1]) {
                     case "player":
-                        Player invPlayer = null;
-                        if (!RpgEngine.onlinePlayer.containsKey(args[2])) {
-                            sender.sendMessage(Preferences.playerNotFound);
-                            return;
+                        if (!RpgEngine.rpgRunning) {
+                            Player invPlayer = null;
+                            if (!RpgEngine.onlinePlayer.containsKey(args[2])) {
+                                sender.sendMessage(Preferences.playerNotFound);
+                                return;
+                            }
+                            try {
+                                invPlayer = Bukkit.getPlayer(args[2]);
+                            } catch (Exception e) {
+                                return;
+                            }
+                            if (RpgEngine.rpgPlayer.containsKey(invPlayer.getDisplayName())) {
+                                sender.sendMessage(Preferences.playerAlreadyInRpg);
+                                return;
+                            }
+                            invPlayer.sendMessage(Preferences.playerAddToRpg);
+                            sender.sendMessage(Preferences.succPlayerAddToRpg);
+                            RpgEngine.addRpgPlayer(invPlayer);
                         }
-                        try {
-                            invPlayer = Bukkit.getPlayer(args[2]);
-                        } catch (Exception e) {
-                            return;
-                        }
-                        if (RpgEngine.rpgPlayer.containsKey(invPlayer.getDisplayName())) {
-                            invPlayer.sendMessage(Preferences.playerAlreadyInRpg);
-                            return;
-                        }
-                        invPlayer.sendMessage(Preferences.playerAddToRpg);
-                        sender.sendMessage(Preferences.succPlayerAddToRpg);
-                        RpgEngine.addRpgPlayer(invPlayer);
                         break;
 
                     default:
@@ -63,20 +65,22 @@ public class CmdRpg implements IntCommand {
             case "remove":
                 switch (args[1]) {
                     case "player":
-                        Player dellPlayer;
-                        try {
-                            dellPlayer = Bukkit.getPlayer(args[2]);
-                        } catch (Exception e) {
-                            sender.sendMessage(Preferences.playerNotFound);
-                            return;
+                        if (!RpgEngine.rpgRunning) {
+                            Player dellPlayer;
+                            try {
+                                dellPlayer = Bukkit.getPlayer(args[2]);
+                            } catch (Exception e) {
+                                sender.sendMessage(Preferences.playerNotFound);
+                                return;
+                            }
+                            if (!RpgEngine.rpgPlayer.containsKey(dellPlayer.getDisplayName())) {
+                                dellPlayer.sendMessage(Preferences.playerIsNotInRpg);
+                                return;
+                            }
+                            dellPlayer.sendMessage(Preferences.playerRemoveFromRpg);
+                            sender.sendMessage(Preferences.succPlayerRemoveFromRpg);
+                            RpgEngine.deleteRpgPlayer(dellPlayer);
                         }
-                        if (!RpgEngine.rpgPlayer.containsKey(dellPlayer.getDisplayName())) {
-                            dellPlayer.sendMessage(Preferences.playerIsNotInRpg);
-                            return;
-                        }
-                        dellPlayer.sendMessage(Preferences.playerRemoveFromRpg);
-                        sender.sendMessage(Preferences.succPlayerRemoveFromRpg);
-                        RpgEngine.deleteRpgPlayer(dellPlayer);
                         break;
                     default:
                     case "help":
@@ -109,24 +113,16 @@ public class CmdRpg implements IntCommand {
                 break;
 
             case "join":
-                if (RpgEngine.rpgPlayer.containsKey(current.getDisplayName())) {
-                    current.sendMessage(Preferences.playerAlreadyInRpg);
-                    return;
+                if (!RpgEngine.rpgRunning) {
+                    if (RpgEngine.rpgPlayer.containsKey(current.getDisplayName())) {
+                        current.sendMessage(Preferences.playerAlreadyInRpg);
+                        return;
+                    }
+                    current.sendMessage(Preferences.playerAddToRpg);
+                    RpgEngine.addRpgPlayer(current);
                 }
-                current.sendMessage(Preferences.playerAddToRpg);
-                RpgEngine.addRpgPlayer(current);
                 break;
-                
-            case "night":
-                current.sendMessage("THIS IS A DEVELOP COMMAND! But it works...in the moment...its freake´n Alpha MAAAN");
-                RpgEngine.nightRpg(sender);
-                break;
-                
-            case "day":
-                current.sendMessage("THIS IS A DEVELOP COMMAND! But it works...in the moment...its freake´n Alpha MAAAN");
-                RpgEngine.dayRpg(sender);
-                break;
-                
+
             case "info":
                 sender.sendMessage(Preferences.infoAboutPlugin);
                 break;

@@ -15,3 +15,6 @@ commands:
     vote:
         description: to vote which player should die
         usage: /<command> [player] - vote for one player
+    troll:
+        description: lool
+        usage: /<command> [mod] [player] - troll player
