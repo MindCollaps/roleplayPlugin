@@ -20,7 +20,7 @@ public class detektiv implements Role{
         player.getPlayer().sendTitle("Deine Rolle ist", "§9Detektiv!");
         player.getPlayer().sendMessage(Preferences.detectiv);
         RpgEngine.villagerTeam.add(player);
-        RpgEngine.detective.add(player);
+        RpgEngine.extraVillager.add(player);
     }
 
     @Override

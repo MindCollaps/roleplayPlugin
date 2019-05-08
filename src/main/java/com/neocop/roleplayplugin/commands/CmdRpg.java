@@ -1,4 +1,4 @@
-/*
+ /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -16,6 +16,8 @@ import org.bukkit.entity.Player;
  *
  * @author Noah
  */
+
+
 public class CmdRpg implements IntCommand {
 
     @Override
@@ -109,6 +111,40 @@ public class CmdRpg implements IntCommand {
                     }
                 } catch (Exception e) {
                     System.out.println(Preferences.consoleDes + " [ERROR]" + e);
+                }
+                break;
+
+            case "preferences":
+                switch (args[1]) {
+                    case "days":
+                        if (Integer.valueOf(args[2]) >= 60) {
+                            Preferences.daysDuration = Integer.valueOf(args[2]);
+                        } else {
+                            sender.sendMessage("§cEs müssen mindestens 60 Sekunden angegeben werden!");
+                        }
+
+                        break;
+
+                    case "nights":
+                        if (Integer.valueOf(args[2]) >= 30) {
+                            Preferences.voteDuration = Integer.valueOf(args[2]);
+                        } else {
+                            sender.sendMessage("§cEs müssen mindestens 30 Sekunden angegeben werden!");
+                        }
+
+                        break;
+
+                    case "votes":
+                        if (Integer.valueOf(args[2]) >= 30) {
+                            Preferences.nightsDuration = Integer.valueOf(args[2]);
+                        } else {
+                            sender.sendMessage("§cEs müssen mindestens 30 Sekunden angegeben werden!");
+                        }
+                        break;
+                    case "help":
+                    default:
+                        sender.sendMessage(Preferences.helpRpgPreferences);
+                        break;
                 }
                 break;
 

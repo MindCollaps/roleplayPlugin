@@ -36,7 +36,7 @@ public class rpgListener implements Listener {
                 current.closeInventory();
                  {
                     try {
-                        RpgEngine.killPlayer(rpgUtils.getRpgPlayerByName(prey.getDisplayName()), false);
+                        RpgEngine.killPlayer(rpgUtils.getRpgPlayerByName(prey.getDisplayName()), 1);
                     } catch (Exception ex) {
                         System.out.println(ex);
                         current.sendMessage("§cError");

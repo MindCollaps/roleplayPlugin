@@ -8,10 +8,10 @@ commands:
         usage: /<command> 
     rpg:
         description: configure all rpg stuff
-        usage: /<command> help - for more help
+        usage: /<command> help - fuer mehr Hilfe
     detectiv:
         description: for the role Detectiv
-        usage: /<command> - only for detective
+        usage: /<command> help - helps with the <command> command
     vote:
         description: to vote which player should die
         usage: /<command> [player] - vote for one player

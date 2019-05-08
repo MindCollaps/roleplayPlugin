@@ -23,15 +23,15 @@ import org.bukkit.inventory.meta.SkullMeta;
  * @author Noah
  */
 public class CmdRpgDetective implements IntCommand {
-    
+
     @Override
     public boolean calledUser(String[] args, CommandSender sender, Command command) {
         Player current = (Player) sender;
         try {
             if (RpgEngine.rpgRunning) {
                 if (rpgUtils.getRpgPlayerByName(current.getDisplayName()).isAlive()) {
-                    for (int i = 0; RpgEngine.detective.size() > i; i++) {
-                        if (RpgEngine.detective.get(i).getPlayer().getDisplayName().equalsIgnoreCase(current.getDisplayName())) {
+                    for (int i = 0; RpgEngine.extraVillager.size() > i; i++) {
+                        if (RpgEngine.extraVillager.get(i).getPlayer().getDisplayName().equalsIgnoreCase(current.getDisplayName())) {
                             return true;
                         }
                     }
@@ -50,45 +50,47 @@ public class CmdRpgDetective implements IntCommand {
         sender.sendMessage(Preferences.noPermissionDetectiveRoleNeeded);
         return false;
     }
-    
+
     @Override
     public void actionUser(String[] args, CommandSender sender, Command command) {
         Player current = (Player) sender;
-        switch (args[0]) {
-            case Preferences.commandModDetectiveAnalyze:
-                Inventory inv = Bukkit.createInventory(null, 9 * 3, "§9Detectiv");
-                
-                ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (short) SkullType.PLAYER.ordinal());
-                SkullMeta skullMeta = (SkullMeta) skull.getItemMeta();
-                
-                Object[] players = RpgEngine.rpgPlayer.values().toArray();
-                Player p = null;
-                int count = 9;
-                for (int i = 0; players.length > i; i++) {
-                    p = (Player) players[i];
-                    count++;
-                    if (p.getDisplayName().equalsIgnoreCase(current.getName())) {
-                        count--;
-                    } else {
-                        skullMeta.setOwner(p.getDisplayName());
-                        skullMeta.setDisplayName(p.getDisplayName());
-                        skull.setItemMeta(skullMeta);
-                        inv.setItem(count, skull);
+        if (args.length > 0) {
+            switch (args[0]) {
+                case Preferences.commandModDetectiveAnalyze:
+                    Inventory inv = Bukkit.createInventory(null, 9 * 3, "§9Detectiv");
+
+                    ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (short) SkullType.PLAYER.ordinal());
+                    SkullMeta skullMeta = (SkullMeta) skull.getItemMeta();
+
+                    Object[] players = RpgEngine.rpgPlayer.values().toArray();
+                    Player p = null;
+                    int count = 9;
+                    for (int i = 0; players.length > i; i++) {
+                        p = (Player) players[i];
+                        count++;
+                        if (p.getDisplayName().equalsIgnoreCase(current.getName())) {
+                            count--;
+                        } else {
+                            skullMeta.setOwner(p.getDisplayName());
+                            skullMeta.setDisplayName(p.getDisplayName());
+                            skull.setItemMeta(skullMeta);
+                            inv.setItem(count, skull);
+                        }
                     }
-                }
-                current.openInventory(inv);
-                break;
-            
-            default:
-            case "help":
-                current.sendMessage(Preferences.helpDetectivCommon);
-                break;
+                    current.openInventory(inv);
+                    break;
+
+                default:
+                case "help":
+                    current.sendMessage(Preferences.helpDetectivCommon);
+                    break;
+            }
         }
     }
-    
+
     @Override
     public void actionServer(String[] args, CommandSender sender, Command command) {
         System.out.println(Preferences.noPermissionCommandOnlyForUser);
     }
-    
+
 }

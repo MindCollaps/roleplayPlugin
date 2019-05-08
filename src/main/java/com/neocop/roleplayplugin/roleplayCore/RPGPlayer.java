@@ -19,7 +19,7 @@ public class RPGPlayer {
     public boolean protect;
     public boolean alive;
 
-    public RPGPlayer(Player player, RPGRole role, String roleName) {
+    public RPGPlayer(Player player, RPGRole role) {
         this.player = player;
         this.role = role;
         this.alive = true;

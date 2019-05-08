@@ -22,8 +22,7 @@ public class RPGRole {
     
     public int killer = 0;
     public int villager = 1;
-    public int solo = 2;
-    public int team = 3;
+    public int extraVillager = 2;
     
     public RPGRole(Role role, String roleName, int roleTyp, int neededPlayers){
         this.role = role;
