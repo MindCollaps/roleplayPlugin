@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.ThreadLocalRandom;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Difficulty;
 import org.bukkit.GameMode;
 import org.bukkit.World;
@@ -20,6 +21,7 @@ import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Score;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.ScoreboardManager;
+import org.bukkit.scoreboard.Team;
 
 /**
  *
@@ -38,6 +40,7 @@ public class RpgEngine {
     public static ArrayList<String> playersWhichHasVoted = new ArrayList<>();
     public static ArrayList<String> playerWhichIsVoted = new ArrayList<>();
     public static Objective timer = null;
+    public static Team team = null;
     public static Score night = null;
     public static Score day = null;
     public static Score vote = null;
@@ -53,11 +56,12 @@ public class RpgEngine {
     public static boolean voteAllowed = false;
     public static int rounds = 0;
     public static World world;
+    
+    public static int phase = 0;
 
     public static void startRpg(Player player) {
         if (rpgRunning == false) {
             //init Scorboard
-            System.out.println(Preferences.consoleDes + "Init Scoreboard");
             try {
                 ScoreboardManager manager = Bukkit.getScoreboardManager();
                 board = manager.getNewScoreboard();
@@ -65,17 +69,20 @@ public class RpgEngine {
                 System.out.println(e);
             }
 
-            System.out.println(Preferences.consoleDes + "Init Objective");
             Objective objective = board.registerNewObjective("timer", "timer");
             objective.setDisplaySlot(DisplaySlot.SIDEBAR);
             objective.setDisplayName("Timer");
             RpgEngine.timer = objective;
 
-            System.out.println(Preferences.consoleDes + "Init Score");
             RpgEngine.night = RpgEngine.timer.getScore("Night: ");
             RpgEngine.day = RpgEngine.timer.getScore("Day: ");
             RpgEngine.vote = RpgEngine.timer.getScore("Vote: ");
             
+            //team
+            team = board.registerNewTeam("rpg");
+            team.setAllowFriendlyFire(false);
+            team.setPrefix("§a[RPG] ");
+            //score
             vote.setScore(0);
             day.setScore(0);
             night.setScore(0);
@@ -128,6 +135,7 @@ public class RpgEngine {
                     p = (Player) players[i];
                     allRpgPlayer.add(p);
                     p.setScoreboard(board);
+                    team.addPlayer(p);
                     if (!randomPlayerId.contains(i)) {
                         rpgRolePlayer.put(p.getDisplayName(), new RPGPlayer(p, rpgRoles.get(0)));
                     }
@@ -140,28 +148,32 @@ public class RpgEngine {
     }
 
     public static void nightRpg() {
+        phase = 0;
         System.out.println(Preferences.consoleDes + "vote rpg");
         //Vote kill
         if (rounds > 0) {
             try {
                 int votedPlayers = RpgEngine.playerWhichIsVoted.size();
-                double value = RpgEngine.rpgRolePlayer.size() / 4 * 3;
+                int value = RpgEngine.rpgRolePlayer.size() /100 * 80;
                 boolean someoneDied = false;
-                for (int i = 0; i < RpgEngine.playerWhichIsVoted.size(); i++) {
-                    int votes = RpgEngine.playerWhichIsVoted.indexOf(RpgEngine.playerWhichIsVoted.get(i));
-                    if (votes >= value) {
+                System.out.println(Preferences.consoleDes + "Vote...needed value: " + value + " voted players: " + votedPlayers);
+                for (int i = 0; i < votedPlayers; i++) {
+                    int playerVoteValue = RpgEngine.playerWhichIsVoted.indexOf(i);
+                    if (playerVoteValue >= value){
                         someoneDied = true;
-                        pluginUtils.sendMessageToAllAliveRpgPlayer("§eSpieler §c" + RpgEngine.playerWhichIsVoted.get(i) + " §emuss sterben! Er hat " + votes + "Stimmen");
+                        pluginUtils.sendMessageToAllAliveRpgPlayer("§eSpieler §c" + RpgEngine.playerWhichIsVoted.get(i) + " §emuss sterben! Er hat " + playerVoteValue + "Stimmen");
                         killPlayer(rpgUtils.getRpgPlayerByName(RpgEngine.playerWhichIsVoted.get(i)), 0);
-                        break;
                     }
                 }
+                
                 if (!someoneDied) {
                     pluginUtils.sendMessageToAllAliveRpgPlayer(Preferences.globalNobodyDied);
                 }
             } catch (Exception e) {
                 System.out.println(e);
             }
+            playerWhichIsVoted.clear();
+            playersWhichHasVoted.clear();
         }
         System.out.println(Preferences.consoleDes + "night rpg");
         //night
@@ -178,6 +190,7 @@ public class RpgEngine {
     }
 
     public static void dayRpg() {
+        phase = 1;
         System.out.println(Preferences.consoleDes + "day rpg");
         Object[] players = RpgEngine.rpgRolePlayer.values().toArray();
         Player p = null;
@@ -192,6 +205,7 @@ public class RpgEngine {
     }
 
     public static void voteRpg() {
+        phase = 2;
         System.out.println(Preferences.consoleDes + "vote rpg");
         voteAllowed = true;
         pluginUtils.sendMessageToAllAliveRpgPlayer(Preferences.globalVoteBegin);

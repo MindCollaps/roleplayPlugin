@@ -30,6 +30,7 @@ public class rpgListener implements Listener {
         switch (e.getInventory().getTitle()) {
             case "§cKiller":
                 e.setCancelled(true);
+                if(RpgEngine.phase == 0){
                 ItemStack i = e.getCurrentItem();
                 Player prey = Bukkit.getPlayer(i.getItemMeta().getDisplayName());
                 e.getInventory().clear();
@@ -40,7 +41,10 @@ public class rpgListener implements Listener {
                     } catch (Exception ex) {
                         System.out.println(ex);
                         current.sendMessage("§cError");
-                    }
+                    }   
+                }
+                } else {
+                    current.sendMessage("§cDies ist nur in der Nacht möglich!");
                 }
                 break;
             case "§9Detectiv":

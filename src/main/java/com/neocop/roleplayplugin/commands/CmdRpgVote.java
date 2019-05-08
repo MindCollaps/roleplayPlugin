@@ -25,12 +25,11 @@ public class CmdRpgVote implements IntCommand {
             if (RpgEngine.rpgRunning) {
                 if (RpgEngine.voteAllowed) {
                     if (rpgUtils.getRpgPlayerByName(current.getDisplayName()).isAlive()) {
-                        for (int i = 0; RpgEngine.playersWhichHasVoted.size() > i; i++) {
-                            if (RpgEngine.playersWhichHasVoted.get(i).equalsIgnoreCase(current.getDisplayName())) {
-                                sender.sendMessage(Preferences.noPermissionAlreadyVoted);
-                                return false;
-                            }
+                        if (RpgEngine.playersWhichHasVoted.contains(current.getDisplayName())) {
+                            sender.sendMessage(Preferences.noPermissionAlreadyVoted);
+                            return false;
                         }
+
                         return true;
                     } else {
                         sender.sendMessage(Preferences.noPermissionAlreadyDead);
@@ -47,7 +46,6 @@ public class CmdRpgVote implements IntCommand {
             System.out.println(ex);
             current.sendMessage("§cError!");
         }
-        sender.sendMessage(Preferences.noPermissionDetectiveRoleNeeded);
         return false;
     }
 
@@ -56,6 +54,7 @@ public class CmdRpgVote implements IntCommand {
         Player current = (Player) sender;
         if (RpgEngine.rpgRolePlayer.containsKey(args[0])) {
             RpgEngine.playerWhichIsVoted.add(args[0]);
+            RpgEngine.playersWhichHasVoted.add(current.getDisplayName());
             current.sendMessage(Preferences.playerAddToVoteList);
         } else {
             current.sendMessage(Preferences.playerNotFound);
