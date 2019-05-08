@@ -6,10 +6,15 @@
 package com.neocop.roleplayplugin.commands;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import static org.bukkit.NamespacedKey.minecraft;
 import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.material.MaterialData;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 /**
  *
@@ -33,21 +38,42 @@ public class CmdTrole implements IntCommand {
             case "view":
                 if (args.length > 1) {
                     Player tar = null;
-                    try{
-                      tar = Bukkit.getPlayer(args[1]);   
-                    } catch (Exception e){
-                     sender.sendMessage("Kein Spieler gefunden");
-                     return;
+                    try {
+                        tar = Bukkit.getPlayer(args[1]);
+                    } catch (Exception e) {
+                        sender.sendMessage("Kein Spieler gefunden");
+                        return;
                     }
                     int times = Integer.valueOf(args[2]);
                     for (int i = 0; i < times; i++) {
                         Block target = tar.getTargetBlock(null, 0);
-                        if(target.getType().isBlock()){
-                         target.breakNaturally();   
+                        if (target.getType().isBlock()) {
+                            target.breakNaturally();
                         }
                     }
                 } else {
                     current.sendMessage("Bitte spieler angeben!");
+                }
+                break;
+
+            case "sickofdiamonds":
+                if (args.length > 1) {
+                    Player tar = null;
+                    try {
+                        tar = Bukkit.getPlayer(args[1]);
+                    } catch (Exception e) {
+                        sender.sendMessage("Nope, wohl eher nicht...");
+                        return;
+                    }
+                    int times = Integer.valueOf(args[2]);
+                    for (int i = 0; i < times; i++) {
+                        Block target = tar.getTargetBlock(null, 0);
+                        if (target.getType().getId() == 57) {
+                            tar.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 1, 10));
+                        } else {
+                            current.sendMessage("Falsch!");
+                        }
+                    }
                 }
                 break;
         }
