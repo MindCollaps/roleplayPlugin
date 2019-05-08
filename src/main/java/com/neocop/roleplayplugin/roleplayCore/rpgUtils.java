@@ -9,6 +9,7 @@ import static com.neocop.roleplayplugin.roleplayCore.RpgEngine.killedPlayer;
 import static com.neocop.roleplayplugin.roleplayCore.RpgEngine.rpgPlayer;
 import static com.neocop.roleplayplugin.roleplayCore.RpgEngine.rpgRolePlayer;
 import com.neocop.roleplayplugin.utils.Preferences;
+import com.neocop.roleplayplugin.utils.pluginUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
@@ -39,6 +40,6 @@ public class rpgUtils {
         rpgRolePlayer.remove(died.getDisplayName());
         rpgPlayer.remove(died.getDisplayName());
         died.setGameMode(GameMode.SPECTATOR);
-        Bukkit.broadcast("§cVorzeitger Tod oder das Spiel wurde verlassen! Spieler wurde aus dem Spiel entfernt!", null);
+        pluginUtils.sendMessageToAllAliveRpgPlayer("§cVorzeitger Tod oder das Spiel wurde verlassen! Spieler wurde aus dem Spiel entfernt!");
     }
 }

@@ -26,7 +26,7 @@ public class killer implements Role {
     public void start(RPGPlayer player) {
         player.getPlayer().sendTitle("Deine Rolle ist", "§cMurder!");
         player.getPlayer().sendMessage(Preferences.killer);
-        RpgEngine.killer.add(player);
+        RpgEngine.killerTeam.add(player);
     }
 
     @Override
@@ -36,19 +36,20 @@ public class killer implements Role {
         ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (short) SkullType.PLAYER.ordinal());
         SkullMeta skullMeta = (SkullMeta) skull.getItemMeta();
 
-        Object[] players = RpgEngine.rpgPlayer.values().toArray();
-        Player p = null;
+        Object[] players = RpgEngine.rpgRolePlayer.values().toArray();
+        RPGPlayer p = null;
         int count = 9;
         for (int i = 0; players.length > i; i++) {
-            p = (Player) players[i];
+            p =  (RPGPlayer) players[i];
             count++;
-            if(p.getDisplayName().equalsIgnoreCase(player.getPlayer().getName())){
+            if (p.getRole().getRoleTyp() == 0) {
                 count--;
+            } else {
+                skullMeta.setOwner(p.getPlayer().getDisplayName());
+                skullMeta.setDisplayName(p.getPlayer().getDisplayName());
+                skull.setItemMeta(skullMeta);
+                inv.setItem(count, skull);
             }
-            skullMeta.setOwner(p.getDisplayName());
-            skullMeta.setDisplayName(p.getDisplayName());
-            skull.setItemMeta(skullMeta);
-            inv.setItem(count, skull);
         }
         player.getPlayer().openInventory(inv);
         player.getPlayer().sendMessage(Preferences.rpgKillerNightAction);
