@@ -5,6 +5,7 @@
  */
 package com.neocop.roleplayplugin.commands;
 
+import com.neocop.roleplayplugin.roleplayCore.RPGPlayer;
 import com.neocop.roleplayplugin.roleplayCore.RpgEngine;
 import com.neocop.roleplayplugin.roleplayCore.rpgUtils;
 import com.neocop.roleplayplugin.utils.Preferences;
@@ -27,27 +28,21 @@ public class CmdRpgDetective implements IntCommand {
     @Override
     public boolean calledUser(String[] args, CommandSender sender, Command command) {
         Player current = (Player) sender;
-        try {
-            if (RpgEngine.rpgRunning) {
-                if (rpgUtils.getRpgPlayerByName(current.getDisplayName()).isAlive()) {
-                    for (int i = 0; RpgEngine.extraVillager.size() > i; i++) {
-                        if (RpgEngine.extraVillager.get(i).getPlayer().getDisplayName().equalsIgnoreCase(current.getDisplayName())) {
-                            return true;
-                        }
-                    }
-                    sender.sendMessage(Preferences.noPermissionDetectiveRoleNeeded);
+        RPGPlayer rpp = RpgEngine.extraVillager.get(current.getDisplayName());
+        if (rpgUtils.hasPermission(current, rpp)) {
+            if (rpp.getAbility().getAbilityName().equalsIgnoreCase("detektiv")) {
+                if (rpp.getAbility().getData() <= 2) {
+                    RpgEngine.extraVillager.get(current.getDisplayName()).getAbility().setData(rpp.getAbility().getData() + 1);
+                    return true;
                 } else {
-                    sender.sendMessage(Preferences.noPermissionAlreadyDead);
+                    sender.sendMessage("§cDu hast bereits alle Lügendetektoren aufgebraucht!");
+                    return false;
                 }
             } else {
-                sender.sendMessage(Preferences.noRunningRpg);
+                sender.sendMessage(Preferences.noPermissionDetectiveRoleNeeded);
                 return false;
             }
-        } catch (Exception ex) {
-            System.out.println(ex);
-            current.sendMessage("§cError!");
         }
-        sender.sendMessage(Preferences.noPermissionDetectiveRoleNeeded);
         return false;
     }
 
@@ -62,11 +57,13 @@ public class CmdRpgDetective implements IntCommand {
                     ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (short) SkullType.PLAYER.ordinal());
                     SkullMeta skullMeta = (SkullMeta) skull.getItemMeta();
 
-                    Object[] players = RpgEngine.rpgPlayer.values().toArray();
+                    Object[] players = RpgEngine.rpgRolePlayer.values().toArray();
                     Player p = null;
+                    RPGPlayer rpp = null;
                     int count = 9;
                     for (int i = 0; players.length > i; i++) {
-                        p = (Player) players[i];
+                        rpp = (RPGPlayer) players[i];
+                        p = rpp.player;
                         count++;
                         if (p.getDisplayName().equalsIgnoreCase(current.getName())) {
                             count--;

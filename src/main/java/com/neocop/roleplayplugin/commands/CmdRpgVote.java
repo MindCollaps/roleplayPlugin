@@ -5,6 +5,7 @@
  */
 package com.neocop.roleplayplugin.commands;
 
+import com.neocop.roleplayplugin.roleplayCore.RPGPlayer;
 import com.neocop.roleplayplugin.roleplayCore.RpgEngine;
 import com.neocop.roleplayplugin.roleplayCore.rpgUtils;
 import com.neocop.roleplayplugin.utils.Preferences;
@@ -21,9 +22,10 @@ public class CmdRpgVote implements IntCommand {
     @Override
     public boolean calledUser(String[] args, CommandSender sender, Command command) {
         Player current = (Player) sender;
-        try {
-            if (RpgEngine.rpgRunning) {
-                if (RpgEngine.voteAllowed) {
+        RPGPlayer rpp = RpgEngine.rpgRolePlayer.get(current.getDisplayName());
+        if (rpgUtils.hasPermission(current, rpp)) {
+            if (RpgEngine.voteAllowed) {
+                try {
                     if (rpgUtils.getRpgPlayerByName(current.getDisplayName()).isAlive()) {
                         if (RpgEngine.playersWhichHasVoted.contains(current.getDisplayName())) {
                             sender.sendMessage(Preferences.noPermissionAlreadyVoted);
@@ -34,17 +36,13 @@ public class CmdRpgVote implements IntCommand {
                     } else {
                         sender.sendMessage(Preferences.noPermissionAlreadyDead);
                     }
-                } else {
-                    sender.sendMessage(Preferences.noPermissionVoteNotActive);
-                    return false;
+                } catch (Exception ex) {
+                    System.out.println(ex);
                 }
             } else {
-                sender.sendMessage(Preferences.noRunningRpg);
+                sender.sendMessage(Preferences.noPermissionVoteNotActive);
                 return false;
             }
-        } catch (Exception ex) {
-            System.out.println(ex);
-            current.sendMessage("§cError!");
         }
         return false;
     }

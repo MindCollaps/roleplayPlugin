@@ -3,24 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.neocop.roleplayplugin.roleplayCore.roles;
+package com.neocop.roleplayplugin.roleplayCore.abilitys;
 
 import com.neocop.roleplayplugin.roleplayCore.RPGPlayer;
 import com.neocop.roleplayplugin.roleplayCore.RpgEngine;
 import com.neocop.roleplayplugin.utils.Preferences;
-import org.bukkit.entity.Player;
 
 /**
  *
  * @author Noah
  */
-public class villager implements Role{
+public class villager implements Ability{
 
     @Override
     public void start(RPGPlayer player) {
         player.getPlayer().sendTitle("Deine Rolle ist", "§aVillager!");
         player.getPlayer().sendMessage(Preferences.villager);
-        RpgEngine.villagerTeam.add(player);
+        RpgEngine.villagerTeam.put(player.getPlayer().getDisplayName(), player);
     }
 
     @Override
@@ -30,7 +29,11 @@ public class villager implements Role{
 
     @Override
     public void actionDay(RPGPlayer player) {
-        player.getPlayer().sendMessage(Preferences.rpgVillagerDayAction);
+        if(RpgEngine.killerKilled){
+             player.getPlayer().sendMessage(Preferences.rpgVillagerDayActionDied);
+        } else {
+             player.getPlayer().sendMessage(Preferences.rpgVillagerDayActionNoDied);
+        }
     }
     
 }

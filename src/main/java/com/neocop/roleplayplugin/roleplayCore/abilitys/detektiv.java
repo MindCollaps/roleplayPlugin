@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.neocop.roleplayplugin.roleplayCore.roles;
+package com.neocop.roleplayplugin.roleplayCore.abilitys;
 
 import com.neocop.roleplayplugin.roleplayCore.RPGPlayer;
 import com.neocop.roleplayplugin.roleplayCore.RpgEngine;
@@ -13,14 +13,16 @@ import com.neocop.roleplayplugin.utils.Preferences;
  *
  * @author Noah
  */
-public class detektiv implements Role{
+public class detektiv implements Ability{
 
     @Override
     public void start(RPGPlayer player) {
         player.getPlayer().sendTitle("Deine Rolle ist", "§9Detektiv!");
         player.getPlayer().sendMessage(Preferences.detectiv);
-        RpgEngine.villagerTeam.add(player);
-        RpgEngine.extraVillager.add(player);
+        RpgEngine.villagerTeam.put(player.getPlayer().getDisplayName(), player);
+        RpgEngine.extraVillager.put(player.getPlayer().getDisplayName(), player);
+        RpgEngine.extraSc.addPlayer(player.getPlayer());
+        RpgEngine.extraSc.addPlayer(player.getPlayer());
     }
 
     @Override
@@ -30,7 +32,11 @@ public class detektiv implements Role{
 
     @Override
     public void actionDay(RPGPlayer player) {
-        player.getPlayer().sendMessage(Preferences.rpgDetectivDayAction);
+        if(RpgEngine.killerKilled){
+         player.getPlayer().sendMessage(Preferences.rpgDetectivDayActionDied);   
+        } else {
+            player.getPlayer().sendMessage(Preferences.rpgDetectivDayActionNoDied);   
+        }
     }
     
 }

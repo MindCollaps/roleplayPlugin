@@ -5,6 +5,8 @@
  */
 package com.neocop.roleplayplugin.roleplayCore;
 
+import com.neocop.roleplayplugin.roleplayCore.roles.RPGRole;
+import com.neocop.roleplayplugin.roleplayCore.abilitys.RPGAbility;
 import org.bukkit.entity.Player;
 
 /**
@@ -14,24 +16,18 @@ import org.bukkit.entity.Player;
 public class RPGPlayer {
 
     public Player player;
+    public RPGAbility ability;
     public RPGRole role;
 
     public boolean protect;
     public boolean alive;
 
-    public RPGPlayer(Player player, RPGRole role) {
+    public RPGPlayer(Player player, RPGAbility ability, RPGRole role) {
         this.player = player;
-        this.role = role;
+        this.ability = ability;
         this.alive = true;
         this.protect = false;
-    }
-
-    public Player getPlayer() {
-        return player;
-    }
-
-    public void setPlayer(Player player) {
-        this.player = player;
+        this.role = role;
     }
 
     public RPGRole getRole() {
@@ -40,6 +36,22 @@ public class RPGPlayer {
 
     public void setRole(RPGRole role) {
         this.role = role;
+    }
+    
+    public Player getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+
+    public RPGAbility getAbility() {
+        return ability;
+    }
+
+    public void setAbility(RPGAbility role) {
+        this.ability = role;
     }
 
     public boolean isProtect() {

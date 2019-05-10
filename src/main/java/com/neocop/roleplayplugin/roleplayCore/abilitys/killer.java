@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.neocop.roleplayplugin.roleplayCore.roles;
+package com.neocop.roleplayplugin.roleplayCore.abilitys;
 
 import com.neocop.roleplayplugin.roleplayCore.RPGPlayer;
 import com.neocop.roleplayplugin.roleplayCore.RpgEngine;
@@ -11,7 +11,6 @@ import com.neocop.roleplayplugin.utils.Preferences;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.SkullType;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
@@ -20,13 +19,14 @@ import org.bukkit.inventory.meta.SkullMeta;
  *
  * @author Noah
  */
-public class killer implements Role {
+public class killer implements Ability {
 
     @Override
     public void start(RPGPlayer player) {
-        player.getPlayer().sendTitle("Deine Rolle ist", "§cMurder!");
+        player.getPlayer().sendTitle("Deine Rolle ist", "§cMurderer!");
         player.getPlayer().sendMessage(Preferences.killer);
-        RpgEngine.killerTeam.add(player);
+        RpgEngine.killerTeam.put(player.getPlayer().getDisplayName(), player);
+        RpgEngine.killerSc.addPlayer(player.player);
     }
 
     @Override
@@ -42,7 +42,7 @@ public class killer implements Role {
         for (int i = 0; players.length > i; i++) {
             p =  (RPGPlayer) players[i];
             count++;
-            if (p.getRole().getRoleTyp() == 0) {
+            if (p.getAbility().getRoleTyp() == 0) {
                 count--;
             } else {
                 skullMeta.setOwner(p.getPlayer().getDisplayName());

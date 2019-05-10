@@ -1,12 +1,14 @@
- /*
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 package com.neocop.roleplayplugin.commands;
 
+import com.neocop.roleplayplugin.roleplayCore.RPGPlayer;
 import com.neocop.roleplayplugin.roleplayCore.RpgEngine;
 import com.neocop.roleplayplugin.utils.Preferences;
+import java.util.ArrayList;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -16,23 +18,22 @@ import org.bukkit.entity.Player;
  *
  * @author Noah
  */
-
-
 public class CmdRpg implements IntCommand {
-
+    
     @Override
     public boolean calledUser(String[] args, CommandSender sender, Command command) {
         return true;
     }
-
+    
     @Override
     public void actionUser(String[] args, CommandSender sender, Command command) {
         Player current = (Player) sender;
+        RPGPlayer rpp = RpgEngine.rpgRolePlayer.get(current.getDisplayName());
         switch (args[0]) {
             case "start":
                 RpgEngine.startRpg((Player) sender);
                 break;
-
+            
             case "add":
                 switch (args[1]) {
                     case "player":
@@ -56,14 +57,14 @@ public class CmdRpg implements IntCommand {
                             RpgEngine.addRpgPlayer(invPlayer);
                         }
                         break;
-
+                    
                     default:
                     case "help":
                         sender.sendMessage(Preferences.helpRpgCommon);
                         break;
                 }
                 break;
-
+            
             case "remove":
                 switch (args[1]) {
                     case "player":
@@ -90,11 +91,11 @@ public class CmdRpg implements IntCommand {
                         break;
                 }
                 break;
-
+            
             case "stop":
                 RpgEngine.stopRpg(current, true);
                 break;
-
+            
             case "list":
                 try {
                     if (RpgEngine.rpgPlayer.isEmpty()) {
@@ -113,41 +114,53 @@ public class CmdRpg implements IntCommand {
                     System.out.println(Preferences.consoleDes + " [ERROR]" + e);
                 }
                 break;
-
+            
             case "preferences":
                 switch (args[1]) {
                     case "days":
-                        if (Integer.valueOf(args[2]) >= 60) {
+                        if (Integer.valueOf(args[2]) >= 30) {
                             Preferences.daysDuration = Integer.valueOf(args[2]);
+                            sender.sendMessage("§aZeit auf " + args[2] + " gesetzt!");
                         } else {
-                            sender.sendMessage("§cEs müssen mindestens 60 Sekunden angegeben werden!");
+                            sender.sendMessage("§cEs müssen mindestens 30 Sekunden angegeben werden!");
                         }
-
+                        
                         break;
-
+                    
                     case "nights":
                         if (Integer.valueOf(args[2]) >= 30) {
                             Preferences.voteDuration = Integer.valueOf(args[2]);
+                            sender.sendMessage("§aZeit auf " + args[2] + " gesetzt!");
                         } else {
                             sender.sendMessage("§cEs müssen mindestens 30 Sekunden angegeben werden!");
                         }
-
+                        
                         break;
-
+                    
                     case "votes":
                         if (Integer.valueOf(args[2]) >= 30) {
                             Preferences.nightsDuration = Integer.valueOf(args[2]);
+                            sender.sendMessage("§aZeit auf " + args[2] + " gesetzt!");
                         } else {
                             sender.sendMessage("§cEs müssen mindestens 30 Sekunden angegeben werden!");
                         }
                         break;
+                    case "detectivsucc":
+                        try {
+                            Preferences.detectivSucc = Integer.valueOf(args[2]);        
+                            current.sendMessage("§aDetectiv erfolgschance auf " + args[2] + " gesetzt!");
+                        } catch (Exception e) {
+                            current.sendMessage("§cBitte gebe eine gültige Zahl an!");
+                        }
+                        break;
+                    
                     case "help":
                     default:
                         sender.sendMessage(Preferences.helpRpgPreferences);
                         break;
                 }
                 break;
-
+            
             case "join":
                 if (!RpgEngine.rpgRunning) {
                     if (RpgEngine.rpgPlayer.containsKey(current.getDisplayName())) {
@@ -158,21 +171,31 @@ public class CmdRpg implements IntCommand {
                     RpgEngine.addRpgPlayer(current);
                 }
                 break;
-
+            
+            case "extra":
+                String[] argi = new String[args.length - 1];
+                int b = 0;
+                for (int i = 1; i < args.length; i++) {
+                    argi[b] = args[i];
+                    b++;
+                }
+                rpp.getRole().getRole().extra(rpp, argi);
+                break;
+            
             case "info":
                 sender.sendMessage(Preferences.infoAboutPlugin);
                 break;
-
+            
             default:
             case "help":
                 sender.sendMessage(Preferences.helpRpgCommon);
                 break;
         }
     }
-
+    
     @Override
     public void actionServer(String[] args, CommandSender sender, Command command) {
         System.out.println(Preferences.noPermissionCommandOnlyForUser);
     }
-
+    
 }
