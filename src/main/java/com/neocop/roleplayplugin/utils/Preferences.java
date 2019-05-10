@@ -60,7 +60,7 @@ public class Preferences {
     public static final String rpgDetectivDayActionDied = "Wach auf, " + rpgSomeoneDied + " \nDu kannst deinen Lügendetektor benutzen, um den Übeltäter zu identifizieren. Um diesen zu benutzen, führe einfach den Befehl : /detectiv analyze aus.";
     public static final String rpgDetectivDayActionNoDied = "Wach auf, " + rpgNobodyDied + " \nDu kannst deinen Lügendetektor benutzen, um den Übeltäter zu identifizieren. Um diesen zu benutzen, führe einfach den Befehl : /detectiv analyze [name] aus.";
     
-    public static final String succPlayerAddToRpg = "§aDieser Spieler wurde dem Roleplay hinzugefügt!";
+    public static final String succPlayerAddToRpg = "§aSpieler zum Roleplay hinzugefügt!";
     public static final String succPlayerRemoveFromRpg = "§aDieser Spieler wurde aus dem Roleplay entfernt";
 
     public static final String globalPlayerDiedByOtherPlayer = "§eEin Spieler ist gestorben! Findet den Mörder!";

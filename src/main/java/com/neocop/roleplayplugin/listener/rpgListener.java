@@ -5,6 +5,7 @@
  */
 package com.neocop.roleplayplugin.listener;
 
+import com.neocop.roleplayplugin.roleplayCore.RPGPlayer;
 import com.neocop.roleplayplugin.roleplayCore.RpgEngine;
 import com.neocop.roleplayplugin.roleplayCore.rpgUtils;
 import org.bukkit.Bukkit;
@@ -32,18 +33,35 @@ public class rpgListener implements Listener {
                 e.setCancelled(true);
                 if (RpgEngine.phase == 0) {
                     ItemStack i = e.getCurrentItem();
-                    Player prey = Bukkit.getPlayer(i.getItemMeta().getDisplayName());
+                    RPGPlayer preyRpg = null;
+                    try {
+                        preyRpg = rpgUtils.getRpgPlayerByName(i.getItemMeta().getDisplayName());
+                    } catch (Exception ex) {
+                        current.sendMessage("§cError");
+                        break;
+                    }
+                    Player prey = preyRpg.getPlayer();
                     e.getInventory().clear();
                     current.closeInventory();
-                    {
-                        try {
-                            RpgEngine.killPlayer(rpgUtils.getRpgPlayerByName(prey.getDisplayName()), 1);
-                            RpgEngine.killerKilled = true;
-                        } catch (Exception ex) {
-                            System.out.println(ex);
-                            current.sendMessage("§cError");
-                        }
+                    //Harter typ beschützt
+                    if(preyRpg.isProtect()){
+                        current.sendMessage("§cDein Opfer konnte nicht Sterben! Vielleicht wird es beschützt");
+                        prey.sendMessage("§aDu wurdest vor dem Sterben bewart! Bedank dich bei §l" + preyRpg.getProtecter().getPlayer().getDisplayName() + " §r§afür deine Rettung!");
+                        preyRpg.getProtecter().getPlayer().sendMessage("§aDu hast §l" + prey.getDisplayName() + "§r§a beschützt!");
+                        preyRpg.getProtecter().getRole().getRole().resetNightsExtra();
+                        RpgEngine.rpgRolePlayer.get(prey.getDisplayName()).setProtect(false);
+                        RpgEngine.rpgRolePlayer.get(prey.getDisplayName()).setProtecter(null);
+                        break;
                     }
+                    try {
+                        RpgEngine.killPlayer(rpgUtils.getRpgPlayerByName(prey.getDisplayName()), 1);
+                        RpgEngine.killerKilled = true;
+                    } catch (Exception ex) {
+                        System.out.println(ex);
+                        current.sendMessage("§cError");
+                        break;
+                    }
+
                 } else {
                     e.getInventory().clear();
                     current.closeInventory();
@@ -52,21 +70,22 @@ public class rpgListener implements Listener {
                 break;
             case "§9Detectiv":
                 try {
-                e.setCancelled(true);
-                ItemStack in = e.getCurrentItem();
+                    e.setCancelled(true);
+                    ItemStack in = e.getCurrentItem();
                     System.out.println("Value in: " + in.getItemMeta().getDisplayName());
-                Player test = Bukkit.getPlayer(in.getItemMeta().getDisplayName());
-                e.getInventory().clear();
-                current.closeInventory();
-                boolean bad = RpgEngine.analyzePlayer(current, test);
-                
-                if (bad) {
-                    current.sendMessage("§aTestergebnis Positiv! Er ist definitiv der Killer! Bitte allen anderen UNBEDINGT mitteilen!");
-                } else {
-                    current.sendMessage("§cTestergebnis Negativ! Was nicht bedeutet, dass es kein Killer ist, vielleicht kann er einfach nur gut Lügen.");
-                }   
+                    Player test = Bukkit.getPlayer(in.getItemMeta().getDisplayName());
+                    e.getInventory().clear();
+                    current.closeInventory();
+                    boolean bad = RpgEngine.analyzePlayer(current, test);
+
+                    if (bad) {
+                        current.sendMessage("§aTestergebnis Positiv! Er ist definitiv der Killer! Bitte allen anderen UNBEDINGT mitteilen!");
+                    } else {
+                        current.sendMessage("§cTestergebnis Negativ! Was nicht bedeutet, dass es kein Killer ist, vielleicht kann er einfach nur gut Lügen.");
+                    }
                 } catch (Exception x) {
                     System.out.println(x);
+                    break;
                 }
                 break;
         }

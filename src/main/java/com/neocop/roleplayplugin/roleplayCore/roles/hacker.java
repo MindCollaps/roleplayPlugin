@@ -26,7 +26,7 @@ public class hacker implements Role{
         try {
             switch(ext[0]){
                 case "hack":
-                    rpgUtils.playEffektToAllRpgPlayer(player.getPlayer().getLocation(), 100, Effect.ENDEREYE_LAUNCH);
+                    rpgUtils.playEffektToAllRpgPlayer(player.getPlayer().getLocation(), 100, Effect.DRAGON_BREATH);
                     rpgUtils.sendMessageToAllAliveRpgPlayer("§b§k12§r§9[H§6§ka§rc§4§kk§rer]" + player.getPlayer().getDisplayName() + " hat dich gehackt!§4§k1§d52");
                     break;
                     
@@ -38,6 +38,10 @@ public class hacker implements Role{
         } catch (Exception e) {
             System.out.println(e);
         }
+    }
+
+    @Override
+    public void resetNightsExtra() {
     }
     
 }

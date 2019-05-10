@@ -8,7 +8,7 @@ package com.neocop.roleplayplugin.commands;
 import com.neocop.roleplayplugin.roleplayCore.RPGPlayer;
 import com.neocop.roleplayplugin.roleplayCore.RpgEngine;
 import com.neocop.roleplayplugin.utils.Preferences;
-import java.util.ArrayList;
+import com.neocop.roleplayplugin.utils.pluginUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -55,6 +55,20 @@ public class CmdRpg implements IntCommand {
                             invPlayer.sendMessage(Preferences.playerAddToRpg);
                             sender.sendMessage(Preferences.succPlayerAddToRpg);
                             RpgEngine.addRpgPlayer(invPlayer);
+                        }
+                        break;
+                        
+                    case "all":
+                        if (!RpgEngine.rpgRunning) {
+                            Player invPlayer = null;
+                            RpgEngine.rpgPlayer.clear();
+                            Object[] players = RpgEngine.onlinePlayer.values().toArray();
+                            for (int i = 0; i < players.length; i++) {
+                                invPlayer = (Player) players[i];
+                                RpgEngine.rpgPlayer.put(invPlayer.getDisplayName(), invPlayer);
+                                invPlayer.sendMessage(Preferences.playerAddToRpg);
+                            }
+                            sender.sendMessage(Preferences.succPlayerAddToRpg);
                         }
                         break;
                     
@@ -180,6 +194,10 @@ public class CmdRpg implements IntCommand {
                     b++;
                 }
                 rpp.getRole().getRole().extra(rpp, argi);
+                break;
+                
+            case "dev":
+                pluginUtils.spawnRandomFireworkAroundPlayer(current);
                 break;
             
             case "info":

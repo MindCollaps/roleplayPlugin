@@ -28,6 +28,7 @@ public class kpopStar implements Role{
             switch(ext[0]){
                 case "act":
                     rpgUtils.playEffektToAllRpgPlayer(player.getPlayer().getLocation(), 100, Effect.DRAGON_BREATH);
+                    pluginUtils.spawnRandomFireworkAroundPlayer(player.getPlayer());
                     rpgUtils.sendMessageToAllAliveRpgPlayer("§b[K-Pop star] " + player.getPlayer().getDisplayName() + " Tritt auf!");
                     break;
                     
@@ -39,6 +40,10 @@ public class kpopStar implements Role{
         } catch (Exception e) {
             System.out.println(e);
         }
+    }
+
+    @Override
+    public void resetNightsExtra() {
     }
     
 }

@@ -70,10 +70,20 @@ public class Main extends JavaPlugin {
                 roleplayCountdown(10, "§4§k12§r§aRoleplay Beginnt!§r§4§k12", "§4§k12§r§bRoleplay startet in §a", "§b!§r§4§k12");
             } else if ("rpg".equals(label) && "stop".equals(args[0]) && !RpgEngine.rpgRunning) {
                 abortRoleplay();
-                
+            }
+        } else {
+            if(args.length>=0){
+             String argis = args[0];
+            for (int i = 1; i < args.length; i++) {
+                argis = argis + " " + args[i];
+            }
+            sender.sendMessage("§cEs trat ein Fehler während du den command §l/" + label + " " + argis + " §r§cauführen wolltest!");   
+            } else {
+                sender.sendMessage(command.getUsage());
             }
         }
-        return worked;
+        
+        return true;
     }
     
     public void addListeners() {

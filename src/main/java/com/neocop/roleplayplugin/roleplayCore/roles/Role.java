@@ -14,4 +14,5 @@ import com.neocop.roleplayplugin.roleplayCore.RPGPlayer;
 public interface Role {
     public void start(RPGPlayer player);
     public void extra(RPGPlayer player, String[] ext);
+    public void resetNightsExtra();
 }

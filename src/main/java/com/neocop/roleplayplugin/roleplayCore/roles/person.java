@@ -23,5 +23,9 @@ public class person implements Role{
     public void extra(RPGPlayer player, String[] ext) {
         player.getPlayer().sendMessage("§cDiese Rolle hat keine extras!");
     }
+
+    @Override
+    public void resetNightsExtra() {
+    }
     
 }

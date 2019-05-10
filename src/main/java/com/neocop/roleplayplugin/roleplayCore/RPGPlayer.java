@@ -20,6 +20,7 @@ public class RPGPlayer {
     public RPGRole role;
 
     public boolean protect;
+    public RPGPlayer protecter;
     public boolean alive;
 
     public RPGPlayer(Player player, RPGAbility ability, RPGRole role) {
@@ -68,5 +69,18 @@ public class RPGPlayer {
 
     public void setAlive(boolean alive) {
         this.alive = alive;
+    }
+    
+    public RPGPlayer getProtecter() {
+        return protecter;
+    }
+
+    public void setProtecter(RPGPlayer protecter) {
+        this.protecter = protecter;
+    }
+    
+    public void setProtection(RPGPlayer protecter, boolean protect){
+        this.protecter = protecter;
+        this.protect = protect;
     }
 }

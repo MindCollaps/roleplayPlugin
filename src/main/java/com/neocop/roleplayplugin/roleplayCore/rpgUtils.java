@@ -119,4 +119,16 @@ public class rpgUtils {
             p.sendTitle(txt, txt2);
         }
     }
+    
+    public static RPGPlayer getRPGPlayerByRoleName(String name) throws Exception{
+        Object[] players = RpgEngine.rpgRolePlayer.values().toArray();
+        RPGPlayer player = null;
+        for (int i = 0; i < players.length; i++) {
+            player = (RPGPlayer) players[i];
+            if(player.getRole().getRoleName().equalsIgnoreCase(name)){
+                return player;
+            }
+        }
+        throw new Exception("Role not found!");
+    }
 }
