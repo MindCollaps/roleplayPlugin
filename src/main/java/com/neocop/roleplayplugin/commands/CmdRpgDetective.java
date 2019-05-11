@@ -54,7 +54,7 @@ public class CmdRpgDetective implements IntCommand {
                 case Preferences.commandModDetectiveAnalyze:
                     Inventory inv = Bukkit.createInventory(null, 9 * 3, "§9Detectiv");
 
-                    ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (short) SkullType.PLAYER.ordinal());
+                    ItemStack skull = new ItemStack(Material.SKELETON_SKULL,1, (short) 3);
                     SkullMeta skullMeta = (SkullMeta) skull.getItemMeta();
 
                     Object[] players = RpgEngine.rpgRolePlayer.values().toArray();
