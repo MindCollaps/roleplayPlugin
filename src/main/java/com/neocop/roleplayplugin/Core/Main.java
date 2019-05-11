@@ -195,7 +195,7 @@ public class Main extends JavaPlugin {
     }
     
     public void abortRoleplay() {
-        Bukkit.getScheduler().cancelAllTasks();
+        Bukkit.getScheduler().cancelTasks(this);
     }
     
     public boolean testRpgCont() {

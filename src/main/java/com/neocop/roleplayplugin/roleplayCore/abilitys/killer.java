@@ -10,7 +10,6 @@ import com.neocop.roleplayplugin.roleplayCore.RpgEngine;
 import com.neocop.roleplayplugin.utils.Preferences;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.SkullType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
@@ -33,7 +32,7 @@ public class killer implements Ability {
     public void actionNight(RPGPlayer player) {
         Inventory inv = Bukkit.createInventory(null, 9 * 3, "§cKiller");
 
-        ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (short) SkullType.PLAYER.ordinal());
+        ItemStack skull = new ItemStack(Material.SKELETON_SKULL,1, (short) 3);
         SkullMeta skullMeta = (SkullMeta) skull.getItemMeta();
 
         Object[] players = RpgEngine.rpgRolePlayer.values().toArray();
