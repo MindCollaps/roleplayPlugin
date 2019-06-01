@@ -398,6 +398,30 @@ public class RpgEngine {
             villagerTeam.remove(died.getPlayer().getDisplayName());
         }
     }
+    
+    public static void killPlayerWhichLeftWithoutExpection(RPGPlayer died) {
+        System.out.println(Preferences.consoleDes + "kill rpg");
+        System.out.println("Player " + died.player.getDisplayName() + " died!");
+        killedPlayer.add(died.getPlayer().getDisplayName());
+        rpgRolePlayer.remove(died.getPlayer().getDisplayName());
+        rpgPlayer.remove(died.getPlayer().getDisplayName());
+        died.getPlayer().setGameMode(GameMode.SPECTATOR);
+        rpgUtils.sendMessageToAllAliveRpgPlayer("§cVorzeitger Tod oder das Spiel wurde verlassen! Spieler wurde aus dem Spiel entfernt!");
+
+        if (died.getAbility().getRoleTyp() == 0) {
+            System.out.println("Found Killer");
+            killerTeam.remove(died.getPlayer().getDisplayName());
+        }
+        if (died.getAbility().getRoleTyp() == 2) {
+            System.out.println("Found extra");
+            villagerTeam.remove(died.getPlayer().getDisplayName());
+            extraVillager.remove(died.getPlayer().getDisplayName());
+        }
+        if (died.getAbility().getRoleTyp() == 1) {
+            System.out.println("Found Villager");
+            villagerTeam.remove(died.getPlayer().getDisplayName());
+        }
+    }
 
     public static void addRpgPlayer(Player player) {
         rpgPlayer.put(player.getDisplayName(), player);

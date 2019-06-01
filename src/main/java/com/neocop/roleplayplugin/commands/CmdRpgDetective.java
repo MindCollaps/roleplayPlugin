@@ -11,12 +11,12 @@ import com.neocop.roleplayplugin.roleplayCore.rpgUtils;
 import com.neocop.roleplayplugin.utils.Preferences;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.SkullType;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
 /**
@@ -54,7 +54,7 @@ public class CmdRpgDetective implements IntCommand {
                 case Preferences.commandModDetectiveAnalyze:
                     Inventory inv = Bukkit.createInventory(null, 9 * 3, "§9Detectiv");
 
-                    ItemStack skull = new ItemStack(Material.SKELETON_SKULL,1, (short) 3);
+                    ItemStack skull = new ItemStack(Material.PLAYER_HEAD);
                     SkullMeta skullMeta = (SkullMeta) skull.getItemMeta();
 
                     Object[] players = RpgEngine.rpgRolePlayer.values().toArray();
@@ -68,8 +68,8 @@ public class CmdRpgDetective implements IntCommand {
                         if (p.getDisplayName().equalsIgnoreCase(current.getName())) {
                             count--;
                         } else {
-                            skullMeta.setOwner(p.getDisplayName());
                             skullMeta.setDisplayName(p.getDisplayName());
+                            skullMeta.setOwner(p.getPlayer().getDisplayName());
                             skull.setItemMeta(skullMeta);
                             inv.setItem(count, skull);
                         }

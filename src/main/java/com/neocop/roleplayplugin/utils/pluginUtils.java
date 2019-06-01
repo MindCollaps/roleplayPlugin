@@ -5,15 +5,19 @@
  */
 package com.neocop.roleplayplugin.utils;
 
+import com.neocop.roleplayplugin.roleplayCore.RpgEngine;
 import java.util.Random;
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
 import org.bukkit.FireworkEffect.Type;
 import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkMeta;
 
 /**
@@ -29,6 +33,15 @@ public class pluginUtils {
             return false;
         }
     }
+    
+    public static void playSoundToAllPlayers(Sound sound){
+        Object[] players = RpgEngine.onlinePlayer.values().toArray();
+        Player p = null;
+        for (int i = 0; i < players.length; i++) {
+            p = (Player) players[i];
+            p.playSound(p.getLocation(), sound, 1.0F, 0);
+        }
+    }
 
     public static void spawnRandomFireworkAroundPlayer(Player p) {
         //Spawn the Firework, get the FireworkMeta.
@@ -39,13 +52,13 @@ public class pluginUtils {
 
         loc1.setX(loc1.getX() + 2);
         loc1.setY(loc1.getY() + 2);
-        
+
         loc2.setX(loc2.getX() - 2);
         loc2.setY(loc2.getY() + 2);
-        
+
         loc3.setZ(loc3.getZ() + 2);
         loc3.setY(loc3.getY() + 2);
-        
+
         loc4.setY(loc4.getY() + 2);
         loc4.setZ(loc4.getZ() - 2);
 
@@ -154,7 +167,126 @@ public class pluginUtils {
         if (i == 17) {
             c = Color.YELLOW;
         }
+        return c;
+    }
+
+    public static String getMinecraftColorCode(String s) {
+        String c = "";
+        if (s.equalsIgnoreCase("black")) {
+            c = "§0";
+        }
+        if (s.equalsIgnoreCase("dark_blue")) {
+            c = "§1";
+        }
+        if (s.equalsIgnoreCase("dark_green")) {
+            c = "§2";
+        }
+        if (s.equalsIgnoreCase("dark_aqua")) {
+            c = "§3";
+        }
+        if (s.equalsIgnoreCase("dark_red")) {
+            c = "§4";
+        }
+        if (s.equalsIgnoreCase("dark_purple")) {
+            c = "§5";
+        }
+        if (s.equalsIgnoreCase("gold")) {
+            c = "§6";
+        }
+        if (s.equalsIgnoreCase("gray")) {
+            c = "§7";
+        }
+        if (s.equalsIgnoreCase("dark_gray")) {
+            c = "§8";
+        }
+        if (s.equalsIgnoreCase("blue")) {
+            c = "§9";
+        }
+        if (s.equalsIgnoreCase("green")) {
+            c = "§a";
+        }
+        if (s.equalsIgnoreCase("aqua")) {
+            c = "§b";
+        }
+        if (s.equalsIgnoreCase("red")) {
+            c = "§c";
+        }
+        if (s.equalsIgnoreCase("light_purple")) {
+            c = "§d";
+        }
+        if (s.equalsIgnoreCase("yellow")) {
+            c = "§e";
+        }
+        if (s.equalsIgnoreCase("white")) {
+            c = "§f";
+        }
 
         return c;
+    }
+    
+    public static ItemStack getCloth(String clothing){
+        ItemStack is = null;
+        
+        if(clothing.equalsIgnoreCase("leather_helmet")){
+            is = new ItemStack(Material.LEATHER_HELMET);
+        }
+        if(clothing.equalsIgnoreCase("leather_chestplate")){
+            is = new ItemStack(Material.LEATHER_CHESTPLATE);
+        }
+        if(clothing.equalsIgnoreCase("leather_leggins")){
+            is = new ItemStack(Material.LEATHER_LEGGINGS);
+        }
+        if(clothing.equalsIgnoreCase("leather_boots")){
+            is = new ItemStack(Material.LEATHER_BOOTS);
+        }
+        if(clothing.equalsIgnoreCase("chainmail_helmet")){
+            is = new ItemStack(Material.CHAINMAIL_HELMET);
+        }
+        if(clothing.equalsIgnoreCase("chainmail_chestplate")){
+            is = new ItemStack(Material.CHAINMAIL_CHESTPLATE);
+        }
+        if(clothing.equalsIgnoreCase("chainmail_leggins")){
+            is = new ItemStack(Material.CHAINMAIL_LEGGINGS);
+        }
+        if(clothing.equalsIgnoreCase("chainmail_boots")){
+            is = new ItemStack(Material.CHAINMAIL_BOOTS);
+        }
+        if(clothing.equalsIgnoreCase("iron_helmet")){
+            is = new ItemStack(Material.IRON_HELMET);
+        }
+        if(clothing.equalsIgnoreCase("iron_chesplate")){
+            is = new ItemStack(Material.IRON_CHESTPLATE);
+        }
+        if(clothing.equalsIgnoreCase("iron_leggins")){
+            is = new ItemStack(Material.IRON_LEGGINGS);
+        }
+        if(clothing.equalsIgnoreCase("iron_boots")){
+            is = new ItemStack(Material.IRON_BOOTS);
+        }
+        if(clothing.equalsIgnoreCase("diamond_helmet")){
+            is = new ItemStack(Material.DIAMOND_HELMET);
+        }
+        if(clothing.equalsIgnoreCase("diamond_chestplate")){
+            is = new ItemStack(Material.DIAMOND_CHESTPLATE);
+        }
+        if(clothing.equalsIgnoreCase("diamond_leggins")){
+            is = new ItemStack(Material.DIAMOND_LEGGINGS);
+        }
+        if(clothing.equalsIgnoreCase("diamond_boots")){
+            is = new ItemStack(Material.DIAMOND_BOOTS);
+        }
+        if(clothing.equalsIgnoreCase("golden_helmet")){
+            is = new ItemStack(Material.GOLDEN_HELMET);
+        }
+        if(clothing.equalsIgnoreCase("golden_chestplate")){
+            is = new ItemStack(Material.GOLDEN_CHESTPLATE);
+        }
+        if(clothing.equalsIgnoreCase("golden_leggins")){
+            is = new ItemStack(Material.GOLDEN_LEGGINGS);
+        }
+        if(clothing.equalsIgnoreCase("golden_boots")){
+            is = new ItemStack(Material.GOLDEN_BOOTS);
+        }
+        return is;
     }
 }

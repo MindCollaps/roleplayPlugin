@@ -7,6 +7,7 @@ package com.neocop.roleplayplugin.commands;
 
 import com.neocop.roleplayplugin.roleplayCore.RPGPlayer;
 import com.neocop.roleplayplugin.roleplayCore.RpgEngine;
+import com.neocop.roleplayplugin.roleplayCore.rpgUtils;
 import com.neocop.roleplayplugin.utils.Preferences;
 import com.neocop.roleplayplugin.utils.pluginUtils;
 import org.bukkit.Bukkit;
@@ -19,12 +20,12 @@ import org.bukkit.entity.Player;
  * @author Noah
  */
 public class CmdRpg implements IntCommand {
-    
+
     @Override
     public boolean calledUser(String[] args, CommandSender sender, Command command) {
         return true;
     }
-    
+
     @Override
     public void actionUser(String[] args, CommandSender sender, Command command) {
         Player current = (Player) sender;
@@ -33,7 +34,7 @@ public class CmdRpg implements IntCommand {
             case "start":
                 RpgEngine.startRpg((Player) sender);
                 break;
-            
+
             case "add":
                 switch (args[1]) {
                     case "player":
@@ -57,7 +58,7 @@ public class CmdRpg implements IntCommand {
                             RpgEngine.addRpgPlayer(invPlayer);
                         }
                         break;
-                        
+
                     case "all":
                         if (!RpgEngine.rpgRunning) {
                             Player invPlayer = null;
@@ -71,14 +72,14 @@ public class CmdRpg implements IntCommand {
                             sender.sendMessage(Preferences.succPlayerAddToRpg);
                         }
                         break;
-                    
+
                     default:
                     case "help":
                         sender.sendMessage(Preferences.helpRpgCommon);
                         break;
                 }
                 break;
-            
+
             case "remove":
                 switch (args[1]) {
                     case "player":
@@ -105,11 +106,11 @@ public class CmdRpg implements IntCommand {
                         break;
                 }
                 break;
-            
+
             case "stop":
                 RpgEngine.stopRpg(current, true);
                 break;
-            
+
             case "list":
                 try {
                     if (RpgEngine.rpgPlayer.isEmpty()) {
@@ -128,7 +129,7 @@ public class CmdRpg implements IntCommand {
                     System.out.println(Preferences.consoleDes + " [ERROR]" + e);
                 }
                 break;
-            
+
             case "preferences":
                 switch (args[1]) {
                     case "days":
@@ -138,9 +139,9 @@ public class CmdRpg implements IntCommand {
                         } else {
                             sender.sendMessage("§cEs müssen mindestens 30 Sekunden angegeben werden!");
                         }
-                        
+
                         break;
-                    
+
                     case "nights":
                         if (Integer.valueOf(args[2]) >= 30) {
                             Preferences.voteDuration = Integer.valueOf(args[2]);
@@ -148,9 +149,9 @@ public class CmdRpg implements IntCommand {
                         } else {
                             sender.sendMessage("§cEs müssen mindestens 30 Sekunden angegeben werden!");
                         }
-                        
+
                         break;
-                    
+
                     case "votes":
                         if (Integer.valueOf(args[2]) >= 30) {
                             Preferences.nightsDuration = Integer.valueOf(args[2]);
@@ -161,20 +162,20 @@ public class CmdRpg implements IntCommand {
                         break;
                     case "detectivsucc":
                         try {
-                            Preferences.detectivSucc = Integer.valueOf(args[2]);        
+                            Preferences.detectivSucc = Integer.valueOf(args[2]);
                             current.sendMessage("§aDetectiv erfolgschance auf " + args[2] + " gesetzt!");
                         } catch (Exception e) {
                             current.sendMessage("§cBitte gebe eine gültige Zahl an!");
                         }
                         break;
-                    
+
                     case "help":
                     default:
                         sender.sendMessage(Preferences.helpRpgPreferences);
                         break;
                 }
                 break;
-            
+
             case "join":
                 if (!RpgEngine.rpgRunning) {
                     if (RpgEngine.rpgPlayer.containsKey(current.getDisplayName())) {
@@ -185,7 +186,7 @@ public class CmdRpg implements IntCommand {
                     RpgEngine.addRpgPlayer(current);
                 }
                 break;
-            
+
             case "extra":
                 String[] argi = new String[args.length - 1];
                 int b = 0;
@@ -195,25 +196,54 @@ public class CmdRpg implements IntCommand {
                 }
                 rpp.getRole().getRole().extra(rpp, argi);
                 break;
-                
+
+            case "vote":
+                if (rpgUtils.hasPermission(current, rpp)) {
+                    if (RpgEngine.voteAllowed) {
+                        try {
+                            if (rpgUtils.getRpgPlayerByName(current.getDisplayName()).isAlive()) {
+                                if (RpgEngine.playersWhichHasVoted.contains(current.getDisplayName())) {
+                                    sender.sendMessage(Preferences.noPermissionAlreadyVoted);
+                                    break;
+                                }
+                                if (RpgEngine.rpgRolePlayer.containsKey(args[1])) {
+                                    RpgEngine.playerWhichIsVoted.add(args[1]);
+                                    RpgEngine.playersWhichHasVoted.add(current.getDisplayName());
+                                    current.sendMessage(Preferences.playerAddToVoteList);
+                                } else {
+                                    current.sendMessage(Preferences.playerNotFound);
+                                }
+                            } else {
+                                sender.sendMessage(Preferences.noPermissionAlreadyDead);
+                            }
+                        } catch (Exception ex) {
+                            System.out.println(ex);
+                        }
+                    } else {
+                        sender.sendMessage(Preferences.noPermissionVoteNotActive);
+                        break;
+                    }
+                }
+                break;
+
             case "dev":
                 pluginUtils.spawnRandomFireworkAroundPlayer(current);
                 break;
-            
+
             case "info":
                 sender.sendMessage(Preferences.infoAboutPlugin);
                 break;
-            
+
             default:
             case "help":
                 sender.sendMessage(Preferences.helpRpgCommon);
                 break;
         }
     }
-    
+
     @Override
     public void actionServer(String[] args, CommandSender sender, Command command) {
         System.out.println(Preferences.noPermissionCommandOnlyForUser);
     }
-    
+
 }

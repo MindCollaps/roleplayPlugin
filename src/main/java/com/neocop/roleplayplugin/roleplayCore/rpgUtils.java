@@ -5,12 +5,8 @@
  */
 package com.neocop.roleplayplugin.roleplayCore;
 
-import static com.neocop.roleplayplugin.roleplayCore.RpgEngine.killedPlayer;
-import static com.neocop.roleplayplugin.roleplayCore.RpgEngine.rpgPlayer;
-import static com.neocop.roleplayplugin.roleplayCore.RpgEngine.rpgRolePlayer;
 import com.neocop.roleplayplugin.utils.Preferences;
 import org.bukkit.Effect;
-import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -32,15 +28,6 @@ public class rpgUtils {
             }
         }
         throw new Exception("User " + userName + " cant found!");
-    }
-
-    public static void playerDiedOrLeaveWithoutExpection(Player died) {
-        System.out.println(Preferences.consoleDes + " rpg player died or leave without killer or vote!");
-        killedPlayer.add(died.getDisplayName());
-        rpgRolePlayer.remove(died.getDisplayName());
-        rpgPlayer.remove(died.getDisplayName());
-        died.setGameMode(GameMode.SPECTATOR);
-        rpgUtils.sendMessageToAllAliveRpgPlayer("§cVorzeitger Tod oder das Spiel wurde verlassen! Spieler wurde aus dem Spiel entfernt!");
     }
 
     public static boolean hasPermission(Player current, RPGPlayer rpp) {

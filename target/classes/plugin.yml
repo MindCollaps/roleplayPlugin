@@ -1,7 +1,8 @@
 name: roleplayPlugin
 main: com.neocop.roleplayplugin.Core.Main
-version: 1.0
+version: 1.1
 author: Neo_Mc Noah Elijah Till
+api-version: 1.13
 commands:
     helloWorld:
         description: just Hello World...yk?
@@ -18,3 +19,6 @@ commands:
     troll:
         description: lool
         usage: /<command> [mod] [player] - troll player
+    util:
+        desciption: has some helpful commands
+        usage: /<command> help - for more help

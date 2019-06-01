@@ -5,10 +5,9 @@
  */
 package com.neocop.roleplayplugin.Core;
 
-import com.neocop.roleplayplugin.commands.CmdHelloWorld;
 import com.neocop.roleplayplugin.commands.CmdRpg;
 import com.neocop.roleplayplugin.commands.CmdRpgDetective;
-import com.neocop.roleplayplugin.commands.CmdRpgVote;
+import com.neocop.roleplayplugin.commands.CmdUtils;
 import com.neocop.roleplayplugin.listener.rpgListener;
 import com.neocop.roleplayplugin.listener.leaveJoinListener;
 import com.neocop.roleplayplugin.roleplayCore.RPGPlayer;
@@ -16,7 +15,6 @@ import com.neocop.roleplayplugin.roleplayCore.RpgEngine;
 import static com.neocop.roleplayplugin.roleplayCore.RpgEngine.rpgRolePlayer;
 import com.neocop.roleplayplugin.roleplayCore.rpgUtils;
 import com.neocop.roleplayplugin.utils.Preferences;
-import com.neocop.roleplayplugin.utils.pluginUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.command.Command;
@@ -28,7 +26,7 @@ import org.bukkit.plugin.java.JavaPlugin;
  *
  * @author Noah
  */
-public class Main extends JavaPlugin {
+public class Plugin extends JavaPlugin {
     
     int repTaskId = 0;
     int dayTask = 0;
@@ -92,10 +90,9 @@ public class Main extends JavaPlugin {
     }
     
     public void addCommands() {
-        commandHandler.commands.put("helloworld", new CmdHelloWorld());
         commandHandler.commands.put("rpg", new CmdRpg());
         commandHandler.commands.put("detectiv", new CmdRpgDetective());
-        commandHandler.commands.put("vote", new CmdRpgVote());
+        commandHandler.commands.put("util", new CmdUtils());
         //commandHandler.commands.put("troll", new CmdTrole());
     }
     
