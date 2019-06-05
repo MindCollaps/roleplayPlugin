@@ -67,7 +67,7 @@ public class Preferences {
     public static final String globalRpgGetCanceled = "§cDas Roleplay wurde unterbrochen!";
     public static final String globalRules = striche + "§e§lRules§r\n\nEs geht sofort los, nur noch ein paar grundlegende Sachen. \nEigentlich ganz einfach:\n-Vorzeitiges Sterben (durch äußere einflüsse) oder verlassen des Servers, führt zum Spielauschluss\n-Verhaltet euch so, wie eure Rolle es verlangt\n-Reportet Bugs\n-Seid nett\n-Habt spaß" + striche;
     public static final String globalNobodyDied = "§eDas dorf hat sich nicht entscheiden können, wer stirbt!";
-    public static final String globalVoteBegin = striche + "§2§lVoting§r\n\nBitte stimmt jetzt mit dem vote command ab, wer diese Runde sterben soll. Es müssen mindestens 3/4 dafür sein, sonst findet keine Hinrichtung statt!" + striche;
+    public static final String globalVoteBegin = striche + "§2§lVoting§r\n\nBitte stimmt jetzt mit dem §l/rpg vote [player]§r command ab, wer diese Runde sterben soll. Es müssen mindestens 3/4 dafür sein, sonst findet keine Hinrichtung statt!" + striche;
     
     public static final String rpgRoleControl = striche + "§6§lDie Rolle§r\nDie sogenannte Rolle hat theoretisch keine besonderen eigenen Fähighkeiten, sie soll deinen Charakter, den du Spielen sollst bestimmen und anweisen. Verhalte dich also so, wie es deine Rolle vorgibt. Manche Rollen haben ein extra, dies kannst du mit §l/rpg extra help§r herraus finden!" + striche;
     
@@ -86,6 +86,12 @@ public class Preferences {
             + "/" + commandNameRpg + " preferences nights <value> - Ändert die Zeiteinstellungen, wie lange eine Nacht dauert\n"
             + "/" + commandNameRpg + " preferences votes <value> -  Ändert die Zeiteinstellungen, wie lange die Votephase dauert\n"
             + "/" + commandNameRpg + " preferences detectivsucc <value> - ändert die erfolgschance des Detectivs";
+    
+    public static final String helpUtilCommon = "§lObjects:§r\n-title: spawnt einen schwebenden Titel\n-player: spawnt einen Armorstand" + striche + "§lSpawn§r\n/util spawn [obj] [txt/playerName] - spawnt einen Titel"
+            + striche + "§lProp§r\n/util prop [obj] set name [txt] - ändert den Text des erstellten Textes\n"
+            + "/util prop [obj] set color [color] - was wohl?"
+            + "/util prop [obj] set cloth [cloth] - zieht dat Fich an\n"
+            + "/util prop [obj] remove - entfernt den erstellen Titel";
     
     public static final String infoAboutPlugin = striche + "§4§k12§r§eRoleplay Plugin§4§k12§r\n\n§6Idee, Entwickler: §bNoah Till (Neo_MC) De(Germany)\n§6Arbeitszeit: §bbisher ca. 35 Stunden\n§6Entwickelt: §bseit 02.05.2019\n§6Version: §b" + version + striche;
 

@@ -12,7 +12,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.material.MaterialData;
 
 /**
  *
@@ -32,20 +34,20 @@ public class killer implements Ability {
     public void actionNight(RPGPlayer player) {
         Inventory inv = Bukkit.createInventory(null, 9 * 3, "§cKiller");
 
-        ItemStack skull = new ItemStack(Material.SKELETON_SKULL,1, (short) 3);
+        ItemStack skull = new ItemStack(Material.PLAYER_HEAD);
         SkullMeta skullMeta = (SkullMeta) skull.getItemMeta();
 
         Object[] players = RpgEngine.rpgRolePlayer.values().toArray();
         RPGPlayer p = null;
         int count = 9;
         for (int i = 0; players.length > i; i++) {
-            p =  (RPGPlayer) players[i];
+            p = (RPGPlayer) players[i];
             count++;
             if (p.getAbility().getRoleTyp() == 0) {
                 count--;
             } else {
-                skullMeta.setOwner(p.getPlayer().getDisplayName());
                 skullMeta.setDisplayName(p.getPlayer().getDisplayName());
+                skullMeta.setOwner(p.getPlayer().getDisplayName());
                 skull.setItemMeta(skullMeta);
                 inv.setItem(count, skull);
             }

@@ -5,8 +5,11 @@
  */
 package com.neocop.roleplayplugin.listener;
 
+import com.neocop.roleplayplugin.roleplayCore.RPGPlayer;
 import com.neocop.roleplayplugin.roleplayCore.RpgEngine;
 import com.neocop.roleplayplugin.roleplayCore.rpgUtils;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -31,7 +34,12 @@ public final class leaveJoinListener implements Listener {
             Player died = event.getPlayer();
             if (RpgEngine.rpgPlayer.containsKey(died.getDisplayName())) {
                 if (RpgEngine.killedPlayer.contains(died.getDisplayName())) {
-                    rpgUtils.playerDiedOrLeaveWithoutExpection(died);
+                    try {
+                        RPGPlayer rpP = rpgUtils.getRpgPlayerByName(died.getDisplayName());
+                        RpgEngine.killPlayerWhichLeftWithoutExpection(rpP);
+                    } catch (Exception ex) {
+                        Logger.getLogger(leaveJoinListener.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
             }
         }
