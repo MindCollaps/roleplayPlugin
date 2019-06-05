@@ -212,6 +212,7 @@ public class RpgEngine {
         }
     }
 
+    //angeben wie viele es davon geben kann (zahl)
     public static void addRoles() {
         rpgRoles.add(new RPGRole("person", new person(), -1));
         rpgRoles.add(new RPGRole("kpopfan", new kpopFan(), 1));
