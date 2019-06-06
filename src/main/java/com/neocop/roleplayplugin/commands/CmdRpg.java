@@ -17,7 +17,7 @@ import org.bukkit.entity.Player;
 
 /**
  *
- * @author Noah
+ * @author Noa
  */
 public class CmdRpg implements IntCommand {
 
