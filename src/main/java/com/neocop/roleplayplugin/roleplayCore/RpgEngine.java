@@ -10,6 +10,7 @@ import com.neocop.roleplayplugin.roleplayCore.abilitys.detektiv;
 import com.neocop.roleplayplugin.roleplayCore.abilitys.killer;
 import com.neocop.roleplayplugin.roleplayCore.abilitys.villager;
 import com.neocop.roleplayplugin.roleplayCore.roles.RPGRole;
+import com.neocop.roleplayplugin.roleplayCore.roles.backfisch;
 import com.neocop.roleplayplugin.roleplayCore.roles.harterTyp;
 import com.neocop.roleplayplugin.roleplayCore.roles.hacker;
 import com.neocop.roleplayplugin.roleplayCore.roles.kpopFan;
@@ -220,6 +221,7 @@ public class RpgEngine {
         rpgRoles.add(new RPGRole("otaku", new otaku(), 1));
         rpgRoles.add(new RPGRole("hacker", new hacker(), 1));
         rpgRoles.add(new RPGRole("hartertyp", new harterTyp(), 1));
+        rpgRoles.add(new RPGRole("backfisch", new backfisch(), 1));
     }
 
     public static void nightRpg() {
