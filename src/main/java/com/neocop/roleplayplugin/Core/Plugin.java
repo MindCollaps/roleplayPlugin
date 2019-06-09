@@ -7,6 +7,7 @@ package com.neocop.roleplayplugin.Core;
 
 import com.neocop.roleplayplugin.commands.CmdRpg;
 import com.neocop.roleplayplugin.commands.CmdRpgDetective;
+import com.neocop.roleplayplugin.commands.CmdTrole;
 import com.neocop.roleplayplugin.commands.CmdUtils;
 import com.neocop.roleplayplugin.listener.rpgListener;
 import com.neocop.roleplayplugin.listener.leaveJoinListener;
@@ -93,7 +94,7 @@ public class Plugin extends JavaPlugin {
         commandHandler.commands.put("rpg", new CmdRpg());
         commandHandler.commands.put("detectiv", new CmdRpgDetective());
         commandHandler.commands.put("util", new CmdUtils());
-        //commandHandler.commands.put("troll", new CmdTrole());
+        commandHandler.commands.put("troll", new CmdTrole());
     }
     
     public void roleplayCountdown(final int countdown, final String endText, final String countText1, final String countText2) {
