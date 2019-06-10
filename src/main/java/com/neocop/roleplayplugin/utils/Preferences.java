@@ -18,6 +18,8 @@ public class Preferences {
     
     public static String filePath;
     
+    public static String portAdminKey;
+    
     public static final String version = "1.0-SNAPSHOT";
 
     public static final String striche = "\n§r§e--------------------------------------------------§r\n";
@@ -79,6 +81,7 @@ public class Preferences {
     public static final String portExistAlready = "§cDieser Port existiert bereits!";
     public static final String portCreated = "§aPort erstellt!";
     public static final String portDeleted = "§aPort entfernt!";
+    public static final String portEdited = "§aPort bearbeitet!";
     
     public static final String helpRpgCommon = "/" + commandNameRpg + " start - Startet das Rolepay\n"
             + "/" + commandNameRpg + " stop - Stoppt das Spiel\n"
@@ -107,6 +110,7 @@ public class Preferences {
                         + "/port remove [name] - removes port\n"
                         + "/port list - shows global ports\n"
                         + "/port list private - shows private ports\n"
+                        + "/port edit [name] share [player name] - add player to port\n"
                         + "/port private [name] - use private port\n"
                         + "/port [name] - use global port ";
     

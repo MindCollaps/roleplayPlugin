@@ -5,9 +5,9 @@
  */
 package com.neocop.roleplayplugin.listener;
 
-import com.neocop.roleplayplugin.roleplayCore.RPGPlayer;
-import com.neocop.roleplayplugin.roleplayCore.RpgEngine;
-import com.neocop.roleplayplugin.roleplayCore.rpgUtils;
+import com.neocop.roleplayplugin.roleplay.RPGPlayer;
+import com.neocop.roleplayplugin.roleplay.RpgEngine;
+import com.neocop.roleplayplugin.roleplay.rpgUtils;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.bukkit.Bukkit;
@@ -74,7 +74,6 @@ public class rpgListener implements Listener {
                 try {
                     e.setCancelled(true);
                     ItemStack in = e.getCurrentItem();
-                    System.out.println("Value in: " + in.getItemMeta().getDisplayName());
                     Player test = Bukkit.getPlayer(in.getItemMeta().getDisplayName());
                     e.getInventory().clear();
                     current.closeInventory();

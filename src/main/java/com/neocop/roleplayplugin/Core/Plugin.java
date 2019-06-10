@@ -12,10 +12,10 @@ import com.neocop.roleplayplugin.commands.CmdTrole;
 import com.neocop.roleplayplugin.commands.CmdUtils;
 import com.neocop.roleplayplugin.listener.rpgListener;
 import com.neocop.roleplayplugin.listener.leaveJoinListener;
-import com.neocop.roleplayplugin.roleplayCore.RPGPlayer;
-import com.neocop.roleplayplugin.roleplayCore.RpgEngine;
-import static com.neocop.roleplayplugin.roleplayCore.RpgEngine.rpgRolePlayer;
-import com.neocop.roleplayplugin.roleplayCore.rpgUtils;
+import com.neocop.roleplayplugin.roleplay.RPGPlayer;
+import com.neocop.roleplayplugin.roleplay.RpgEngine;
+import static com.neocop.roleplayplugin.roleplay.RpgEngine.rpgRolePlayer;
+import com.neocop.roleplayplugin.roleplay.rpgUtils;
 import com.neocop.roleplayplugin.utils.Preferences;
 import com.neocop.roleplayplugin.utils.pluginUtils;
 import java.io.File;
@@ -53,6 +53,7 @@ public class Plugin extends JavaPlugin {
         addCommands();
         CmdPort.loadPorts();
         startScheuduler();
+        pluginUtils.generatePortAdminKey();
         getLogger().info("----------Roleplay plugin is enabled now!----------");
     }
     

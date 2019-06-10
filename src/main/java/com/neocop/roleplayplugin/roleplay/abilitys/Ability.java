@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.neocop.roleplayplugin.roleplayCore.abilitys;
+package com.neocop.roleplayplugin.roleplay.abilitys;
 
-import com.neocop.roleplayplugin.roleplayCore.RPGPlayer;
+import com.neocop.roleplayplugin.roleplay.RPGPlayer;
 
 /**
  *

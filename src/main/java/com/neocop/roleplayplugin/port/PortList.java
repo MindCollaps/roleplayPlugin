@@ -7,6 +7,8 @@ package com.neocop.roleplayplugin.port;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -47,6 +49,20 @@ public class PortList implements Serializable {
         }
          list.add(savingPort);
          return true;
+    }
+    
+    public boolean addPlayerToPort(String portName, String addPlayer){
+        Port port;
+        for (int i = 0; i < list.size(); i++) {
+             port = list.get(i);
+            if (port.getPortName().equalsIgnoreCase(portName)) {
+                 port.setPlayerName(port.getPlayerName() + "," + addPlayer);
+                 list.remove(i);
+                 list.add(port);
+                return true;
+            }
+        }
+        return false;
     }
 
     public Port getById(int id) throws Exception{
