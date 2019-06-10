@@ -112,7 +112,7 @@ public class CmdPort implements IntCommand {
                                         s = s + "\n-" + po.getPortName() + " (" + po.getPlayerName() + ")";
                                     }
                                 }
-                                player.sendMessage("§aUsed Admin Key to remove this Port!");
+                                player.sendMessage("§aUsed Admin Key to show this list!");
                                 player.sendMessage(s);
                                 return;
                             }
