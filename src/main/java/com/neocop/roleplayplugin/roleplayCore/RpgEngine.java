@@ -209,7 +209,7 @@ public class RpgEngine {
         for (int i = 0; i <= rpgPlayer.size(); i++) {
             RpgEngine.rpgAbilitys.add(new RPGAbility(new killer(), "killer", 0, 0));
             RpgEngine.rpgAbilitys.add(new RPGAbility(new detektiv(), "detektiv", 2, 2));
-            i = i + 5;
+            i = i + 7;
         }
     }
 

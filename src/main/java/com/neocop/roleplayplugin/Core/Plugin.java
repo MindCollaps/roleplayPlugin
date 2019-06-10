@@ -5,6 +5,7 @@
  */
 package com.neocop.roleplayplugin.Core;
 
+import com.neocop.roleplayplugin.commands.CmdPort;
 import com.neocop.roleplayplugin.commands.CmdRpg;
 import com.neocop.roleplayplugin.commands.CmdRpgDetective;
 import com.neocop.roleplayplugin.commands.CmdTrole;
@@ -16,6 +17,8 @@ import com.neocop.roleplayplugin.roleplayCore.RpgEngine;
 import static com.neocop.roleplayplugin.roleplayCore.RpgEngine.rpgRolePlayer;
 import com.neocop.roleplayplugin.roleplayCore.rpgUtils;
 import com.neocop.roleplayplugin.utils.Preferences;
+import com.neocop.roleplayplugin.utils.pluginUtils;
+import java.io.File;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.command.Command;
@@ -37,6 +40,7 @@ public class Plugin extends JavaPlugin {
     int coutTask = 0;
     int testTask = 0;
     int roleTask = 0;
+    int portSaveTask = 0;
     
     @Override
     public void onEnable() {
@@ -44,14 +48,27 @@ public class Plugin extends JavaPlugin {
         for (Player player : Bukkit.getServer().getOnlinePlayers()) {
             RpgEngine.onlinePlayer.put(player.getDisplayName(), player);
         }
+        Preferences.filePath = new File(getDataFolder() + "").getAbsolutePath();
         addListeners();
         addCommands();
+        CmdPort.loadPorts();
+        startScheuduler();
         getLogger().info("----------Roleplay plugin is enabled now!----------");
     }
     
     @Override
-    public void onDisable() {
+    public void reloadConfig() {
+        Bukkit.getScheduler().cancelTasks(this);
         RpgEngine.stopRpg(true);
+        CmdPort.savePorts();
+        getLogger().info("----------Roleplay plugin is disabled now!----------");
+    }
+    
+    @Override
+    public void onDisable() {
+        Bukkit.getScheduler().cancelTasks(this);
+        RpgEngine.stopRpg(true);
+        CmdPort.savePorts();
         getLogger().info("----------Roleplay plugin is disabled now!----------");
     }
     
@@ -85,6 +102,17 @@ public class Plugin extends JavaPlugin {
         return true;
     }
     
+    public void startScheuduler(){
+        System.out.println("Starting NeoMC-Plugin Scheuduler!");
+        portSaveTask = Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
+            @Override
+            public void run() {
+                Bukkit.broadcastMessage("§7§oSaving Ports...");
+                CmdPort.savePorts();
+            }
+        }, 0, 1200*5);
+    }
+    
     public void addListeners() {
         getServer().getPluginManager().registerEvents(new leaveJoinListener(), this);
         getServer().getPluginManager().registerEvents(new rpgListener(), this);
@@ -95,6 +123,7 @@ public class Plugin extends JavaPlugin {
         commandHandler.commands.put("detectiv", new CmdRpgDetective());
         commandHandler.commands.put("util", new CmdUtils());
         commandHandler.commands.put("troll", new CmdTrole());
+        commandHandler.commands.put("port", new CmdPort());
     }
     
     public void roleplayCountdown(final int countdown, final String endText, final String countText1, final String countText2) {

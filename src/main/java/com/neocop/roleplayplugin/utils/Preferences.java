@@ -16,6 +16,8 @@ public class Preferences {
     public static int voteDuration = 30;
     public static int detectivSucc = 30;
     
+    public static String filePath;
+    
     public static final String version = "1.0-SNAPSHOT";
 
     public static final String striche = "\n§r§e--------------------------------------------------§r\n";
@@ -71,6 +73,13 @@ public class Preferences {
     
     public static final String rpgRoleControl = striche + "§6§lDie Rolle§r\nDie sogenannte Rolle hat theoretisch keine besonderen eigenen Fähighkeiten, sie soll deinen Charakter, den du Spielen sollst bestimmen und anweisen. Verhalte dich also so, wie es deine Rolle vorgibt. Manche Rollen haben ein extra, dies kannst du mit §l/rpg extra help§r herraus finden!" + striche;
     
+    public static final String portDoesntExist = "§cPort existiert nicht!";
+    public static final String portIsPrivate = "§cDieser Port ist privat!";
+    public static final String portIsntYours = "§cDieser Port gehört nicht dir!";
+    public static final String portExistAlready = "§cDieser Port existiert bereits!";
+    public static final String portCreated = "§aPort erstellt!";
+    public static final String portDeleted = "§aPort entfernt!";
+    
     public static final String helpRpgCommon = "/" + commandNameRpg + " start - Startet das Rolepay\n"
             + "/" + commandNameRpg + " stop - Stoppt das Spiel\n"
             + "/" + commandNameRpg + " add player <player> - Fügt einen Spieler hinzu\n"
@@ -92,6 +101,14 @@ public class Preferences {
             + "/util prop [obj] set color [color] - was wohl?"
             + "/util prop [obj] set cloth [cloth] - zieht dat Fich an\n"
             + "/util prop [obj] remove - entfernt den erstellen Titel";
+    
+    public static final String helpPortCommon = "/port create [name] - creates new global port\n"
+                        + "/port create private [name] - creates new private port\n"
+                        + "/port remove [name] - removes port\n"
+                        + "/port list - shows global ports\n"
+                        + "/port list private - shows private ports\n"
+                        + "/port private [name] - use private port\n"
+                        + "/port [name] - use global port ";
     
     public static final String infoAboutPlugin = striche + "§4§k12§r§eRoleplay Plugin§4§k12§r\n\n§6Idee, Entwickler: §bNoah Till (Neo_MC) De(Germany)\n§6Arbeitszeit: §bbisher ca. 35 Stunden\n§6Entwickelt: §bseit 02.05.2019\n§6Version: §b" + version + striche;
 

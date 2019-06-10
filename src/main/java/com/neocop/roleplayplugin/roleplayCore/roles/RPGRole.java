@@ -5,8 +5,6 @@
  */
 package com.neocop.roleplayplugin.roleplayCore.roles;
 
-import com.neocop.roleplayplugin.roleplayCore.roles.Role;
-
 /**
  *
  * @author Noah
