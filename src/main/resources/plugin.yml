@@ -1,5 +1,5 @@
 name: neoMc-Plugin
-main: com.neocop.roleplayplugin.Core.Plugin
+main: com.neocop.neomcPlugin.Core.Plugin
 version: 1.2
 author: Neo_Mc Noah Elijah Till
 api-version: 1.13
