@@ -5,9 +5,9 @@
  */
 package com.neocop.roleplayplugin.commands;
 
-import com.neocop.roleplayplugin.roleplayCore.RPGPlayer;
-import com.neocop.roleplayplugin.roleplayCore.RpgEngine;
-import com.neocop.roleplayplugin.roleplayCore.rpgUtils;
+import com.neocop.roleplayplugin.roleplay.RPGPlayer;
+import com.neocop.roleplayplugin.roleplay.RpgEngine;
+import com.neocop.roleplayplugin.roleplay.rpgUtils;
 import com.neocop.roleplayplugin.utils.Preferences;
 import com.neocop.roleplayplugin.utils.pluginUtils;
 import org.bukkit.Bukkit;

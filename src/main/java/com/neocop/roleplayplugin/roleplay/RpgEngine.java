@@ -3,19 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.neocop.roleplayplugin.roleplayCore;
+package com.neocop.roleplayplugin.roleplay;
 
-import com.neocop.roleplayplugin.roleplayCore.abilitys.RPGAbility;
-import com.neocop.roleplayplugin.roleplayCore.abilitys.detektiv;
-import com.neocop.roleplayplugin.roleplayCore.abilitys.killer;
-import com.neocop.roleplayplugin.roleplayCore.abilitys.villager;
-import com.neocop.roleplayplugin.roleplayCore.roles.RPGRole;
-import com.neocop.roleplayplugin.roleplayCore.roles.harterTyp;
-import com.neocop.roleplayplugin.roleplayCore.roles.hacker;
-import com.neocop.roleplayplugin.roleplayCore.roles.kpopFan;
-import com.neocop.roleplayplugin.roleplayCore.roles.kpopStar;
-import com.neocop.roleplayplugin.roleplayCore.roles.otaku;
-import com.neocop.roleplayplugin.roleplayCore.roles.person;
+import com.neocop.roleplayplugin.roleplay.abilitys.RPGAbility;
+import com.neocop.roleplayplugin.roleplay.abilitys.detektiv;
+import com.neocop.roleplayplugin.roleplay.abilitys.killer;
+import com.neocop.roleplayplugin.roleplay.abilitys.villager;
+import com.neocop.roleplayplugin.roleplay.roles.RPGRole;
+import com.neocop.roleplayplugin.roleplay.roles.backfisch;
+import com.neocop.roleplayplugin.roleplay.roles.harterTyp;
+import com.neocop.roleplayplugin.roleplay.roles.hacker;
+import com.neocop.roleplayplugin.roleplay.roles.kpopFan;
+import com.neocop.roleplayplugin.roleplay.roles.kpopStar;
+import com.neocop.roleplayplugin.roleplay.roles.otaku;
+import com.neocop.roleplayplugin.roleplay.roles.person;
 import com.neocop.roleplayplugin.utils.Preferences;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -116,11 +117,8 @@ public class RpgEngine {
             vote.setScore(0);
             day.setScore(0);
             night.setScore(0);
-
-            System.out.println(Preferences.consoleDes + "start rpg");
             if (rpgPlayer.size() >= 3) {
                 rpgRunning = true;
-                System.out.println(Preferences.consoleDes + " Starts Roleplay");
                 world = player.getWorld();
                 world.setDifficulty(Difficulty.PEACEFUL);
 
@@ -144,7 +142,6 @@ public class RpgEngine {
 
                 int rdm = 0;
                 //rollen rdm zuweisen
-                System.out.println("Value of roles which going to give away: " + useAbilitys.size());
                 for (int i = 0; i < useAbilitys.size(); i++) {
                     rdm = ThreadLocalRandom.current().nextInt(0, players.length);
                     if (randomPlayerId.contains(rdm)) {
@@ -157,7 +154,6 @@ public class RpgEngine {
                     }
                     p = (Player) players[rdm];
                     randomPlayerId.add(rdm);
-                    System.out.println("Player " + p.getDisplayName() + " with id " + rdm + " gets role " + useAbilitys.get(i).getAbilityName());
                     rpgRolePlayer.put(p.getDisplayName(), new RPGPlayer(p, useAbilitys.get(i), getRandomRole()));
                 }
 
@@ -178,28 +174,17 @@ public class RpgEngine {
     }
 
     public static RPGRole getRandomRole() {
-        System.out.println("----------------------");
-        System.out.println("getRandomRole");
         int rdm = ThreadLocalRandom.current().nextInt(1, rpgRoles.size());
-        System.out.println("rdm number: " + rdm);
         RPGRole role = null;
         for (int i = 0; i < 100; i++) {
-            System.out.println("trie " + i);
             role = rpgRoles.get(rdm);
-            System.out.println("get role " + role.getRoleName());
-            System.out.println("index of rdm: " + randomRoleId.indexOf(rdm) + " max amount: " + role.getMaxAmount());
             if (role.getMaxAmount() < randomRoleId.indexOf(rdm)) {
                 rdm = ThreadLocalRandom.current().nextInt(0, rpgRoles.size());
-                System.out.println("needs new number!");
             } else {
-                System.out.println("Funzt! Added " + rdm + "  " + role.getRoleName());
                 randomRoleId.add(rdm);
-                System.out.println("----------------------");
                 return role;
             }
         }
-        System.out.println("Retunrt Person!");
-        System.out.println("----------------------");
         return rpgRoles.get(0);
     }
 
@@ -208,7 +193,7 @@ public class RpgEngine {
         for (int i = 0; i <= rpgPlayer.size(); i++) {
             RpgEngine.rpgAbilitys.add(new RPGAbility(new killer(), "killer", 0, 0));
             RpgEngine.rpgAbilitys.add(new RPGAbility(new detektiv(), "detektiv", 2, 2));
-            i = i + 5;
+            i = i + 7;
         }
     }
 
@@ -220,18 +205,17 @@ public class RpgEngine {
         rpgRoles.add(new RPGRole("otaku", new otaku(), 1));
         rpgRoles.add(new RPGRole("hacker", new hacker(), 1));
         rpgRoles.add(new RPGRole("hartertyp", new harterTyp(), 1));
+        rpgRoles.add(new RPGRole("backfisch", new backfisch(), 1));
     }
 
     public static void nightRpg() {
         phase = 0;
-        System.out.println(Preferences.consoleDes + "vote rpg");
         //Vote kill
         if (rounds > 0) {
             try {
                 int votedPlayers = RpgEngine.playerWhichIsVoted.size();
                 int value = RpgEngine.rpgRolePlayer.size() - 1;
                 boolean someoneDied = false;
-                System.out.println(Preferences.consoleDes + "Vote...needed value: " + value + " voted players: " + votedPlayers);
                 for (int i = 0; i < votedPlayers; i++) {
                     int playerVoteValue = 0;
                     for (int j = 0; j < playerWhichIsVoted.size(); j++) {
@@ -256,7 +240,6 @@ public class RpgEngine {
             playerWhichIsVoted.clear();
             playersWhichHasVoted.clear();
         }
-        System.out.println(Preferences.consoleDes + "night rpg");
         //night
         Object[] players = RpgEngine.rpgRolePlayer.values().toArray();
         Player p = null;
@@ -272,7 +255,6 @@ public class RpgEngine {
 
     public static void dayRpg() {
         phase = 1;
-        System.out.println(Preferences.consoleDes + "day rpg");
         Object[] players = RpgEngine.rpgRolePlayer.values().toArray();
         Player p = null;
         RPGPlayer rpP = null;
@@ -288,13 +270,11 @@ public class RpgEngine {
 
     public static void voteRpg() {
         phase = 2;
-        System.out.println(Preferences.consoleDes + "vote rpg");
         voteAllowed = true;
         rpgUtils.sendMessageToAllAliveRpgPlayer(Preferences.globalVoteBegin);
     }
 
     public static void stopRpg(Player player, boolean abort) {
-        System.out.println(Preferences.consoleDes + "stop rpg");
         if (rpgRunning) {
             if (abort) {
                 rpgUtils.sendMessageToAllRpgPlayer(Preferences.globalRpgGetCanceled);
@@ -323,7 +303,6 @@ public class RpgEngine {
     }
 
     public static void stopRpg(boolean abort) {
-        System.out.println(Preferences.consoleDes + "stop rpg");
         if (rpgRunning) {
             if (abort) {
                 rpgUtils.sendMessageToAllAliveRpgPlayer(Preferences.globalRpgGetCanceled);
@@ -369,9 +348,7 @@ public class RpgEngine {
         }
     }
 
-    public static void killPlayer(RPGPlayer died, int reason) {
-        System.out.println(Preferences.consoleDes + "kill rpg");
-        System.out.println("Player " + died.player.getDisplayName() + " died!");
+    public static void killPlayer(RPGPlayer died, int reason) {;
         killedPlayer.add(died.getPlayer().getDisplayName());
         rpgRolePlayer.remove(died.getPlayer().getDisplayName());
         rpgPlayer.remove(died.getPlayer().getDisplayName());
@@ -386,23 +363,18 @@ public class RpgEngine {
         }
 
         if (died.getAbility().getRoleTyp() == 0) {
-            System.out.println("Found Killer");
             killerTeam.remove(died.getPlayer().getDisplayName());
         }
         if (died.getAbility().getRoleTyp() == 2) {
-            System.out.println("Found extra");
             villagerTeam.remove(died.getPlayer().getDisplayName());
             extraVillager.remove(died.getPlayer().getDisplayName());
         }
         if (died.getAbility().getRoleTyp() == 1) {
-            System.out.println("Found Villager");
             villagerTeam.remove(died.getPlayer().getDisplayName());
         }
     }
     
     public static void killPlayerWhichLeftWithoutExpection(RPGPlayer died) {
-        System.out.println(Preferences.consoleDes + "kill rpg");
-        System.out.println("Player " + died.player.getDisplayName() + " died!");
         killedPlayer.add(died.getPlayer().getDisplayName());
         rpgRolePlayer.remove(died.getPlayer().getDisplayName());
         rpgPlayer.remove(died.getPlayer().getDisplayName());
@@ -410,16 +382,13 @@ public class RpgEngine {
         rpgUtils.sendMessageToAllAliveRpgPlayer("§cVorzeitger Tod oder das Spiel wurde verlassen! Spieler wurde aus dem Spiel entfernt!");
 
         if (died.getAbility().getRoleTyp() == 0) {
-            System.out.println("Found Killer");
             killerTeam.remove(died.getPlayer().getDisplayName());
         }
         if (died.getAbility().getRoleTyp() == 2) {
-            System.out.println("Found extra");
             villagerTeam.remove(died.getPlayer().getDisplayName());
             extraVillager.remove(died.getPlayer().getDisplayName());
         }
         if (died.getAbility().getRoleTyp() == 1) {
-            System.out.println("Found Villager");
             villagerTeam.remove(died.getPlayer().getDisplayName());
         }
     }

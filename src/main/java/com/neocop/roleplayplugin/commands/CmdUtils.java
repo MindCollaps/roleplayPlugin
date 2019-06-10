@@ -9,10 +9,9 @@ import com.neocop.roleplayplugin.undo.undoArmorstand;
 import com.neocop.roleplayplugin.utils.Preferences;
 import com.neocop.roleplayplugin.utils.pluginUtils;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Arrays;
+import java.util.List;
 import org.bukkit.Bukkit;
-import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -20,8 +19,8 @@ import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
-import org.bukkit.scoreboard.Scoreboard;
 
 /**
  *
@@ -55,6 +54,24 @@ public class CmdUtils implements IntCommand {
         }
         if (args.length >= 0) {
             switch (args[0]) {
+                case "adTest":
+                    ItemStack stack = p.getItemInHand();
+                    if(stack.getType().equals(Material.COD)){
+                        stack.setAmount(stack.getAmount()-1);
+                        ItemStack fisch = new ItemStack(Material.COOKED_COD);
+                        ItemMeta fischMeta = fisch.getItemMeta();
+                        fischMeta.setDisplayName("Backfisch");
+                        
+                        List<String> lore = Arrays.asList(new String[]{"Das ist ein leckerer","gebackener Fisch","lol"});
+                        fischMeta.setLore(lore);
+                        fisch.setItemMeta(fischMeta);
+                        p.getInventory().addItem(fisch);
+                        p.sendMessage("§cYou´ve got a fish :D!");
+                    } else {
+                        p.sendMessage("NÖ DU HAST KEIN FISCH!!!!! HOL DIR ABA SOFORTT EINEN SONST GIBTS STRESS ... lol");
+                    }
+                    break;
+                    
                 case "spawn":
                     if (args.length >= 1) {
                         ArmorStand aS;

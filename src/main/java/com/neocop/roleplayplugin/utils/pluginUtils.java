@@ -5,8 +5,11 @@
  */
 package com.neocop.roleplayplugin.utils;
 
-import com.neocop.roleplayplugin.roleplayCore.RpgEngine;
+import com.neocop.roleplayplugin.roleplay.RpgEngine;
+import static com.neocop.roleplayplugin.roleplay.RpgEngine.rpgRoles;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
 import org.bukkit.FireworkEffect.Type;
@@ -32,6 +35,20 @@ public class pluginUtils {
         } else {
             return false;
         }
+    }
+    
+    public static void generatePortAdminKey(){
+        System.out.println("--------------\nGenerating Port Admin Key!");
+            int length = 5;
+           String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                        + "abcdefghijklmnopqrstuvwxyz"
+                        + "0123456789"
+                        + "#-_<>";
+                String str = new Random().ints(length, 0, chars.length())
+                        .mapToObj(i -> "" + chars.charAt(i))
+                        .collect(Collectors.joining());
+            Preferences.portAdminKey = str;
+            System.out.println("Port Admin Key:\n" + str + "\n--------------");
     }
     
     public static void playSoundToAllPlayers(Sound sound){

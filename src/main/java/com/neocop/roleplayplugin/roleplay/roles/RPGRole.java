@@ -3,9 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.neocop.roleplayplugin.roleplayCore.roles;
-
-import com.neocop.roleplayplugin.roleplayCore.roles.Role;
+package com.neocop.roleplayplugin.roleplay.roles;
 
 /**
  *

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.neocop.roleplayplugin.roleplayCore;
+package com.neocop.roleplayplugin.roleplay;
 
 import com.neocop.roleplayplugin.utils.Preferences;
 import org.bukkit.Effect;
@@ -64,7 +64,6 @@ public class rpgUtils {
         Player p = null;
         for (int i = 0; i < players.length; i++) {
             p = (Player) players[i];
-            System.out.println("Send Message to " + p.getDisplayName());
             p.sendMessage(txt);
         }
     }

@@ -3,16 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.neocop.roleplayplugin.roleplayCore.abilitys;
+package com.neocop.roleplayplugin.roleplay.roles;
 
-import com.neocop.roleplayplugin.roleplayCore.RPGPlayer;
+import com.neocop.roleplayplugin.roleplay.RPGPlayer;
 
 /**
  *
  * @author Noah
  */
-public interface Ability {
+public interface Role {
     public void start(RPGPlayer player);
-    public void actionNight(RPGPlayer player);
-    public void actionDay(RPGPlayer player);
+    public void extra(RPGPlayer player, String[] ext);
+    public void resetNightsExtra();
 }

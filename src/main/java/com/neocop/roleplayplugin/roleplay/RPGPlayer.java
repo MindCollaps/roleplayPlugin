@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.neocop.roleplayplugin.roleplayCore;
+package com.neocop.roleplayplugin.roleplay;
 
-import com.neocop.roleplayplugin.roleplayCore.roles.RPGRole;
-import com.neocop.roleplayplugin.roleplayCore.abilitys.RPGAbility;
+import com.neocop.roleplayplugin.roleplay.roles.RPGRole;
+import com.neocop.roleplayplugin.roleplay.abilitys.RPGAbility;
 import org.bukkit.entity.Player;
 
 /**

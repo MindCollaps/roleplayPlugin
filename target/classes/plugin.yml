@@ -1,6 +1,6 @@
-name: roleplayPlugin
-main: com.neocop.roleplayplugin.Core.Main
-version: 1.1
+name: neoMc-Plugin
+main: com.neocop.roleplayplugin.Core.Plugin
+version: 1.2
 author: Neo_Mc Noah Elijah Till
 api-version: 1.13
 commands:
@@ -13,12 +13,12 @@ commands:
     detectiv:
         description: for the role Detectiv
         usage: /<command> help - helps with the <command> command
-    vote:
-        description: to vote which player should die
-        usage: /<command> [player] - vote for one player
     troll:
         description: lool
         usage: /<command> [mod] [player] - troll player
     util:
         desciption: has some helpful commands
+        usage: /<command> help - for more help
+    port:
+        desciption: port command
         usage: /<command> help - for more help
