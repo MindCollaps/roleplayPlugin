@@ -6,9 +6,7 @@
 package com.neocop.neomcPlugin.utils;
 
 import com.neocop.neomcPlugin.roleplay.RpgEngine;
-import static com.neocop.neomcPlugin.roleplay.RpgEngine.rpgRoles;
 import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
@@ -36,22 +34,34 @@ public class pluginUtils {
             return false;
         }
     }
-    
-    public static void generatePortAdminKey(){
-        System.out.println("--------------\nGenerating Port Admin Key!");
-            int length = 5;
-           String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                        + "abcdefghijklmnopqrstuvwxyz"
-                        + "0123456789"
-                        + "#-_<>";
-                String str = new Random().ints(length, 0, chars.length())
-                        .mapToObj(i -> "" + chars.charAt(i))
-                        .collect(Collectors.joining());
-            Preferences.portAdminKey = str;
-            System.out.println("Port Admin Key:\n" + str + "\n--------------");
+
+    public static String getStringFromArray(int beginning, int ending, String between, String[] array) {
+        String out = array[beginning];
+        if (array.length > beginning) {
+            String c;
+            for (int i = beginning + 1; i < ending; i++) {
+                c = array[i];
+                out = out + between + c;
+            }
+        }
+        return out;
     }
-    
-    public static void playSoundToAllPlayers(Sound sound){
+
+    public static void generatePortAdminKey() {
+        System.out.println("--------------\nGenerating Port Admin Key!");
+        int length = 5;
+        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                + "abcdefghijklmnopqrstuvwxyz"
+                + "0123456789"
+                + "#-_<>";
+        String str = new Random().ints(length, 0, chars.length())
+                .mapToObj(i -> "" + chars.charAt(i))
+                .collect(Collectors.joining());
+        Preferences.portAdminKey = str;
+        System.out.println("Port Admin Key:\n" + str + "\n--------------");
+    }
+
+    public static void playSoundToAllPlayers(Sound sound) {
         Object[] players = RpgEngine.onlinePlayer.values().toArray();
         Player p = null;
         for (int i = 0; i < players.length; i++) {
@@ -258,68 +268,68 @@ public class pluginUtils {
 
         return c;
     }
-    
-    public static ItemStack getCloth(String clothing){
+
+    public static ItemStack getCloth(String clothing) {
         ItemStack is = null;
-        
-        if(clothing.equalsIgnoreCase("leather_helmet")){
+
+        if (clothing.equalsIgnoreCase("leather_helmet")) {
             is = new ItemStack(Material.LEATHER_HELMET);
         }
-        if(clothing.equalsIgnoreCase("leather_chestplate")){
+        if (clothing.equalsIgnoreCase("leather_chestplate")) {
             is = new ItemStack(Material.LEATHER_CHESTPLATE);
         }
-        if(clothing.equalsIgnoreCase("leather_leggins")){
+        if (clothing.equalsIgnoreCase("leather_leggins")) {
             is = new ItemStack(Material.LEATHER_LEGGINGS);
         }
-        if(clothing.equalsIgnoreCase("leather_boots")){
+        if (clothing.equalsIgnoreCase("leather_boots")) {
             is = new ItemStack(Material.LEATHER_BOOTS);
         }
-        if(clothing.equalsIgnoreCase("chainmail_helmet")){
+        if (clothing.equalsIgnoreCase("chainmail_helmet")) {
             is = new ItemStack(Material.CHAINMAIL_HELMET);
         }
-        if(clothing.equalsIgnoreCase("chainmail_chestplate")){
+        if (clothing.equalsIgnoreCase("chainmail_chestplate")) {
             is = new ItemStack(Material.CHAINMAIL_CHESTPLATE);
         }
-        if(clothing.equalsIgnoreCase("chainmail_leggins")){
+        if (clothing.equalsIgnoreCase("chainmail_leggins")) {
             is = new ItemStack(Material.CHAINMAIL_LEGGINGS);
         }
-        if(clothing.equalsIgnoreCase("chainmail_boots")){
+        if (clothing.equalsIgnoreCase("chainmail_boots")) {
             is = new ItemStack(Material.CHAINMAIL_BOOTS);
         }
-        if(clothing.equalsIgnoreCase("iron_helmet")){
+        if (clothing.equalsIgnoreCase("iron_helmet")) {
             is = new ItemStack(Material.IRON_HELMET);
         }
-        if(clothing.equalsIgnoreCase("iron_chesplate")){
+        if (clothing.equalsIgnoreCase("iron_chesplate")) {
             is = new ItemStack(Material.IRON_CHESTPLATE);
         }
-        if(clothing.equalsIgnoreCase("iron_leggins")){
+        if (clothing.equalsIgnoreCase("iron_leggins")) {
             is = new ItemStack(Material.IRON_LEGGINGS);
         }
-        if(clothing.equalsIgnoreCase("iron_boots")){
+        if (clothing.equalsIgnoreCase("iron_boots")) {
             is = new ItemStack(Material.IRON_BOOTS);
         }
-        if(clothing.equalsIgnoreCase("diamond_helmet")){
+        if (clothing.equalsIgnoreCase("diamond_helmet")) {
             is = new ItemStack(Material.DIAMOND_HELMET);
         }
-        if(clothing.equalsIgnoreCase("diamond_chestplate")){
+        if (clothing.equalsIgnoreCase("diamond_chestplate")) {
             is = new ItemStack(Material.DIAMOND_CHESTPLATE);
         }
-        if(clothing.equalsIgnoreCase("diamond_leggins")){
+        if (clothing.equalsIgnoreCase("diamond_leggins")) {
             is = new ItemStack(Material.DIAMOND_LEGGINGS);
         }
-        if(clothing.equalsIgnoreCase("diamond_boots")){
+        if (clothing.equalsIgnoreCase("diamond_boots")) {
             is = new ItemStack(Material.DIAMOND_BOOTS);
         }
-        if(clothing.equalsIgnoreCase("golden_helmet")){
+        if (clothing.equalsIgnoreCase("golden_helmet")) {
             is = new ItemStack(Material.GOLDEN_HELMET);
         }
-        if(clothing.equalsIgnoreCase("golden_chestplate")){
+        if (clothing.equalsIgnoreCase("golden_chestplate")) {
             is = new ItemStack(Material.GOLDEN_CHESTPLATE);
         }
-        if(clothing.equalsIgnoreCase("golden_leggins")){
+        if (clothing.equalsIgnoreCase("golden_leggins")) {
             is = new ItemStack(Material.GOLDEN_LEGGINGS);
         }
-        if(clothing.equalsIgnoreCase("golden_boots")){
+        if (clothing.equalsIgnoreCase("golden_boots")) {
             is = new ItemStack(Material.GOLDEN_BOOTS);
         }
         return is;

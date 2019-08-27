@@ -12,6 +12,7 @@ import com.neocop.neomcPlugin.commands.CmdTrole;
 import com.neocop.neomcPlugin.commands.CmdUtils;
 import com.neocop.neomcPlugin.listener.rpgListener;
 import com.neocop.neomcPlugin.listener.leaveJoinListener;
+import com.neocop.neomcPlugin.netconnect.NetConnectCore;
 import com.neocop.neomcPlugin.roleplay.RPGPlayer;
 import com.neocop.neomcPlugin.roleplay.RpgEngine;
 import static com.neocop.neomcPlugin.roleplay.RpgEngine.rpgRolePlayer;
@@ -54,6 +55,8 @@ public class Plugin extends JavaPlugin {
         CmdPort.loadPorts();
         startScheuduler();
         pluginUtils.generatePortAdminKey();
+        NetConnectCore.portNumber = 25567;
+        NetConnectCore.startServer();
         System.out.println("----------Roleplay plugin is enabled now!----------");
     }
     

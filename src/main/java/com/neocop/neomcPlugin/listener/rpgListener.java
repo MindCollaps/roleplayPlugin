@@ -8,8 +8,6 @@ package com.neocop.neomcPlugin.listener;
 import com.neocop.neomcPlugin.roleplay.RPGPlayer;
 import com.neocop.neomcPlugin.roleplay.RpgEngine;
 import com.neocop.neomcPlugin.roleplay.rpgUtils;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

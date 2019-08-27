@@ -5,6 +5,7 @@
  */
 package com.neocop.neomcPlugin.commands;
 
+import com.neocop.neomcPlugin.roleplay.RpgEngine;
 import com.neocop.neomcPlugin.undo.undoArmorstand;
 import com.neocop.neomcPlugin.utils.Preferences;
 import com.neocop.neomcPlugin.utils.pluginUtils;
@@ -70,6 +71,10 @@ public class CmdUtils implements IntCommand {
                     } else {
                         p.sendMessage("NÖ DU HAST KEIN FISCH!!!!! HOL DIR ABA SOFORTT EINEN SONST GIBTS STRESS ... lol");
                     }
+                    break;
+                    
+                case "test":
+                    p.sendMessage(String.valueOf(RpgEngine.onlinePlayer.size()));
                     break;
                     
                 case "spawn":

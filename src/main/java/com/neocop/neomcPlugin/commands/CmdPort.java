@@ -225,6 +225,7 @@ public class CmdPort implements IntCommand {
                         return;
                     }
                 }
+                
                 if (playerHasPortPermission(port, player.getDisplayName())) {
                     player.teleport(getLocationFromPort(port));
                     if (port.getMessage() != "" || port.getMessage() != null) {
